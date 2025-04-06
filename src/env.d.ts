@@ -1,6 +1,6 @@
 interface ImportMetaEnv {
-  readonly DB_PASSWORD: string;
-  readonly PUBLIC_POKEAPI: string;
+  readonly API_URL: string;
+  readonly API_TOKEN: string;
   // more env variables...
 }
 
