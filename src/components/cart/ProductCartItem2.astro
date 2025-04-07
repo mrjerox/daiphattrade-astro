@@ -1,0 +1,62 @@
+---
+interface Props {
+  thumb_src: string;
+  thumb_alt: string;
+  title: string;
+  color: string;
+  size: string;
+  price: number;
+  stock: boolean;
+}
+const { thumb_src, thumb_alt, title, color, size, price, stock }: Props =
+  Astro.props;
+---
+
+<>
+  <div class="d-block d-md-flex mt-4">
+    <img
+      class="w-50 w-md-20 w-lg-10 rounded-3 m-4"
+      src={`${import.meta.env.BASE_URL}${thumb_src}`}
+      alt={thumb_alt}
+    />
+    <div class="w-100 w-md-50 pt-4 ps-md-4">
+      <div class="d-flex align-items-center mb-2">
+        <h6 class="text-lg mb-0">{title}</h6>
+
+        <div class="d-flex align-items-center ms-3">
+          {
+            stock ? (
+              <>
+                <i class="fas fa-check text-lg text-success" />
+                <p class="mb-0 ms-2 text-sm">In Stock</p>
+              </>
+            ) : (
+              <>
+                <i class="fas fa-minus-circle text-lg" />
+                <p class="mb-0 ms-2 text-sm">Out of Stock</p>
+              </>
+            )
+          }
+        </div>
+      </div>
+      <div class="d-flex align-items-center">
+        <p class="mb-0">{color}</p>
+        <span class="me-2">,</span>
+        <p class="mb-0">{size}</p>
+      </div>
+      <h6 class="mb-1 mt-5">${price.toLocaleString()}</h6>
+    </div>
+    <div class="w-40 w-md-5 pt-4 ms-auto me-4">
+      <input
+        type="number"
+        min={0}
+        class="form-control mb-3"
+        placeholder="1"
+        aria-label="amount"
+      />
+    </div>
+    <div class="w-5 pt-4 mt-1 text-end">
+      <a class="text-dark" href="#">Remove</a>
+    </div>
+  </div>
+</>

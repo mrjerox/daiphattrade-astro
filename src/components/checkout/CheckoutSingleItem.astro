@@ -1,0 +1,32 @@
+---
+import { BASE_URL } from "../../configs/constant.conf";
+
+interface Props {
+  thumb_src: string;
+  thumb_alt: string;
+  title: string;
+  color: string;
+  size: string;
+  price: number;
+}
+const { thumb_src, thumb_alt, title, color, size, price }: Props = Astro.props;
+---
+
+<>
+  <div class="d-flex mb-4">
+    <img
+      class="w-20 rounded-3"
+      src={`${BASE_URL + thumb_src}`}
+      alt={thumb_alt}
+    />
+    <div class="w-60 w-md-70 pt-2 ps-3 ps-md-4">
+      <h6 class="text-lg text-white mb-1">{title}</h6>
+      <p class="mb-0 text-white opacity-8">{color}</p>
+      <p class="mb-0 text-sm text-white opacity-8">{size}</p>
+    </div>
+
+    <div class="w-10 text-end">
+      <p class="text-white mb-0">${price.toLocaleString()}</p>
+    </div>
+  </div>
+</>

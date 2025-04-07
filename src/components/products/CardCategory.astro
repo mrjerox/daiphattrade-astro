@@ -1,0 +1,39 @@
+---
+import { BASE_URL } from "../../configs/constant.conf";
+interface Props {
+  thumb_src: string;
+  title: string;
+  collection: string;
+  classList?: string;
+  cta?: string;
+}
+const { thumb_src, title, collection, classList, cta }: Props = Astro.props;
+const classBody =
+  cta != null ? "align-items-end d-flex" : "text-center w-100 pt-8";
+---
+
+<a href="#">
+  <div
+    class={`card card-background align-items-start mb-4 mb-lg-0 ${classList}`}
+  >
+    <div
+      class="full-background"
+      style={{
+        backgroundImage: `url(${BASE_URL + thumb_src})`,
+        backgroundSize: "cover",
+      }}
+    >
+    </div>
+    <div class={`card-body ${classBody}`}>
+      <div class="d-block mt-10">
+        <p class="text-white font-weight-bold mb-1">{collection}</p>
+        <h4 class="text-white font-weight-bolder">{title}</h4>
+        {/* {(cta != null) &&  */}
+        <a href="#" class="text-white text-sm font-weight-semibold mb-0">
+          See products &#62;
+        </a>
+        {/* } */}
+      </div>
+    </div>
+  </div>
+</a>;

@@ -11,13 +11,18 @@
   },
   "dependencies": {
     "astro": "^5.6.1",
+    "astro-purgecss": "^5.2.2",
     "axios": "^1.8.4",
-    "graphql": "^16.10.0"
+    "bootstrap": "^5.3.5",
+    "graphql": "^16.10.0",
+    "purgecss": "^7.0.2",
+    "sass": "^1.86.3"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "5.0.5",
     "@graphql-codegen/introspection": "^4.0.3",
     "@graphql-codegen/typescript": "4.1.6",
+    "@types/bootstrap": "^5.2.10",
     "typescript": "^5.8.3"
   }
 }

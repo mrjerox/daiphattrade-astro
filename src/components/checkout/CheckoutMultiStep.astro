@@ -1,0 +1,82 @@
+---
+import PaymentDetails from "./PaymentDetails.astro";
+import ShippingInfo from "./ShippingInfo.astro";
+import OrderSummary from "../cart/OrderSummary.astro";
+import CheckoutSingleItemDark from "../checkout/CheckoutSingleItemDark.astro";
+
+interface Props {
+  products: {
+    thumb_src: string;
+    thumb_alt: string;
+    color: string;
+    title: string;
+    price: number;
+    size: string;
+    stock: string;
+    subtotal: number;
+    shipping: number;
+    tax: number;
+  }[];
+}
+const { products }: Props = Astro.props;
+let subtotalCheckout = 0;
+products.map((product) => (subtotalCheckout += product.price));
+---
+
+<section class="bg-gray-100 px-2">
+  <div class="row">
+    <div class="col-12 col-lg-6 p-3 p-md-5">
+      <button class="btn btn-white w-100">
+        <i class="fab fa-apple me-2"></i>
+        Apple Pay
+      </button>
+      <div class="mt-2 mb-4 position-relative text-center">
+        <p
+          class="text-sm font-weight-bold mb-2 text-secondary text-border d-inline z-index-2 bg-white px-3"
+        >
+          or
+        </p>
+      </div>
+      <h5 class="mb-4">Contact information</h5>
+      <div class="form-group">
+        <label>Email address</label>
+        <input
+          type="email"
+          class="form-control"
+          placeholder="Enter your email address"
+        />
+      </div>
+      <div class="form-group">
+        <label>Phone number</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Enter your phone number"
+        />
+      </div>
+
+      <PaymentDetails />
+
+      <ShippingInfo />
+
+      <button class="btn btn-dark w-100 mt-4">Continue</button>
+    </div>
+    <div class="col-12 col-lg-6 p-lg-5">
+      <small class="opacity-6">Amount</small>
+      <h3 class="mb-5">${subtotalCheckout.toLocaleString()}</h3>
+      {
+        products.map((product, i) => (
+          <CheckoutSingleItemDark
+            thumb_src={product.thumb_src}
+            thumb_alt={product.thumb_alt}
+            title={product.title}
+            color={product.color}
+            size={product.size}
+            price={product.price}
+          />
+        ))
+      }
+      <OrderSummary subtotal={subtotalCheckout} />
+    </div>
+  </div>
+</section>

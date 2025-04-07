@@ -1,0 +1,64 @@
+---
+import { BASE_URL } from "../../configs/constant.conf";
+
+interface Props {
+  thumb_src: string;
+  thumb_alt: string;
+  title: string;
+  color: string;
+  size: string;
+  price: number;
+  stock: boolean;
+}
+
+const { thumb_src, thumb_alt, title, color, size, price, stock }: Props =
+  Astro.props;
+---
+
+<>
+  <div class="d-block d-md-flex">
+    <img
+      class="w-50 w-md-30 rounded-3"
+      src={`${BASE_URL}${thumb_src}`}
+      alt={thumb_alt}
+    />
+    <div class="w-100 w-md-50 ps-md-4">
+      <h6 class="text-lg mb-1">{title}</h6>
+      <div class="d-flex">
+        <p class="pe-3 mb-0">{color}</p>
+        <p class="border-start ps-3 mb-0">{size}</p>
+      </div>
+      <div class="d-flex align-items-center mt-6">
+        {
+          stock ? (
+            <>
+              <i class="fas fa-check text-lg text-success" />
+              <p class="mb-0 ms-2 text-sm">In Stock</p>
+            </>
+          ) : (
+            <>
+              <i class="fas fa-minus-circle text-lg" />
+              <p class="mb-0 ms-2 text-sm">Out of Stock</p>
+            </>
+          )
+        }
+      </div>
+    </div>
+    <div class="w-20 w-md-10 mt-4 mt-md-0">
+      <input
+        type="number"
+        min={0}
+        class="form-control"
+        placeholder="1"
+        aria-label="amount"
+      />
+    </div>
+    <h4 class="ms-3">${price.toLocaleString()}</h4>
+
+    <div class="w-10 text-end">
+      <a href="#">
+        <i class="fas fa-times ms-3"></i>
+      </a>
+    </div>
+  </div>
+</>

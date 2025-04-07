@@ -1,22 +1,63 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro Basics</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <slot />
+  </body>
 </html>
 
 <style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    font-family: "Noto Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+  }
 </style>
+<style is:global>
+  code {
+    font-family:
+      Noto Sans,
+      Menlo,
+      Monaco,
+      Lucida Console,
+      Liberation Mono,
+      DejaVu Sans Mono,
+      Bitstream Vera Sans Mono,
+      Courier New,
+      monospace;
+  }
+</style>
+<script>
+  // Import only what you need
+  import "bootstrap/js/dist/alert";
+  import "bootstrap/js/dist/button";
+  import "bootstrap/js/dist/carousel";
+  import "bootstrap/js/dist/collapse";
+  import "bootstrap/js/dist/dropdown";
+  import "bootstrap/js/dist/modal";
+  import "bootstrap/js/dist/offcanvas";
+  import "bootstrap/js/dist/popover";
+  import "bootstrap/js/dist/scrollspy";
+  import "bootstrap/js/dist/tab";
+  import "bootstrap/js/dist/toast";
+  import "bootstrap/js/dist/tooltip";
+  import "../assets/scripts/astro-ecommerce.js";
+</script>

@@ -1,0 +1,15 @@
+---
+interface Props {
+  colors: string[];
+}
+const { colors }: Props = Astro.props;
+---
+
+<div>
+  {
+    colors.map((color: string) => {
+      const badgeClass = "badge filter rounded-4 bg-" + color;
+      return <span class={badgeClass} />;
+    })
+  }
+</div>

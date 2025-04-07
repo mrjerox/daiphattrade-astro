@@ -1,0 +1,34 @@
+---
+import ReviewRating from "./ReviewRating.astro";
+
+interface Props {
+  review: {
+    avatar: string;
+    name: string;
+    date: string;
+    rating: number;
+    comment: string;
+  };
+}
+const { review }: Props = Astro.props;
+---
+
+<>
+  <div class="d-block my-5">
+    <ReviewRating rating={review.rating} />
+    <p class="text-sm mt-4">{review.comment}</p>
+    <div class="d-flex align-items-center">
+      <a
+        href="#"
+        class="avatar avatar-lg rounded-circle min-width-50 min-height-50"
+      >
+        <img alt="Image placeholder" src={review.avatar} />
+      </a>
+      <div class="ms-3">
+        <h6 class="mb-0">{review.name}</h6>
+        <p class="text-sm mb-2">{review.date}</p>
+      </div>
+    </div>
+  </div>
+  <hr class="dark horizontal" />
+</>

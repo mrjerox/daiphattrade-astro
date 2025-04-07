@@ -1,0 +1,19 @@
+---
+interface Props {
+  images: {
+    src: string;
+    alt: string;
+  }[];
+}
+const { images }: Props = Astro.props;
+---
+
+<div class="col-12 col-lg-6">
+  <img class="w-90 rounded-2" src={images[0].src} alt={images[0].alt} />
+  <div class="d-flex mt-4">
+    <img class="w-20 me-4 rounded-2" src={images[0].src} alt={images[0].alt} />
+    <img class="w-20 me-4 rounded-2" src={images[1].src} alt={images[1].alt} />
+    <img class="w-20 me-4 rounded-2" src={images[2].src} alt={images[2].alt} />
+    <img class="w-20 rounded-2" src={images[3].src} alt={images[3].alt} />
+  </div>
+</div>
