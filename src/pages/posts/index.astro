@@ -1,11 +1,15 @@
 ---
-import { postApi } from "../../apis/postApi";
+import Layout from "@layouts/Layout.astro";
+import { postApi } from "@apis/postApi";
 
 const posts = await postApi.getAllPosts(10, "2");
 ---
 
-<meta charset="utf-8" />
-<h1>Posts</h1>
-<ul>
-  {posts.posts.nodes.map((post) => <li>{post.title}</li>)}
-</ul>
+<Layout title="Posts">
+  <main>
+    <h1>Posts</h1>
+    <ul>
+      {posts.posts.nodes.map((post) => <li>{post.title}</li>)}
+    </ul>
+  </main>
+</Layout>

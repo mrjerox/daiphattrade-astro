@@ -9,7 +9,7 @@ interface Props {
     alt: string;
   }[];
   full_description: string;
-  featuresDetails: Map<string, string>;
+  featuresDetails: Map<string, string> | {};
 }
 const { title, images, full_description, featuresDetails }: Props = Astro.props;
 ---

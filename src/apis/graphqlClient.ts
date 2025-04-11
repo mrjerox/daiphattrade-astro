@@ -1,11 +1,11 @@
 import axios, { AxiosError } from 'axios';
 import type { InternalAxiosRequestConfig, AxiosResponse } from 'axios';
-import { API_URL, API_TOKEN } from '../configs/api.conf';
+import { API_HOST, API_ENDPOINT, API_TOKEN } from '../configs/api.conf';
 import type { GraphQLRequest, GraphQLResponse } from '../configs/interface.conf';
 
 // Create axios instance for GraphQL
 const graphqlClient = axios.create({
-  baseURL: API_URL,
+  baseURL: API_HOST + API_ENDPOINT,
   headers: {
     'Content-Type': 'application/json; charset=utf-8',
     'Accept': 'application/json',

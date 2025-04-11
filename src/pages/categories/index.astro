@@ -1,0 +1,76 @@
+---
+import Layout from "@layouts/Layout.astro";
+import data from "@public/data.json";
+import CardCategory from "@components/products/CardCategory.astro";
+---
+
+<Layout title="Categories">
+  <main>
+    <section class="section1 py-5 mt-5">
+      <div class="container">
+        <div class="row">
+          <div class="d-block text-center mb-4">
+            <h3>Our Categories</h3>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
+              quos.
+            </p>
+          </div>
+          <div class="col-md-6">
+            <CardCategory
+              classList="h-100"
+              cta=""
+              collection={data.categories[4].collection}
+              thumb_src={data.categories[4].thumb_src}
+              title={data.categories[4].title}
+            />
+          </div>
+          <div class="col-md-6">
+            <div class="mb-4">
+              <CardCategory
+                classList=""
+                cta=""
+                collection={data.categories[5].collection}
+                thumb_src={data.categories[5].thumb_src}
+                title={data.categories[5].title}
+              />
+            </div>
+            <div class="">
+              <CardCategory
+                classList=""
+                cta=""
+                collection={data.categories[6].collection}
+                thumb_src={data.categories[6].thumb_src}
+                title={data.categories[6].title}
+              />
+            </div>
+          </div>
+          <div class="my-3 col-12"></div>
+          {
+            data.categories.slice(0, 4).map((category) => (
+              <div class="col-md-6 col-lg-3">
+                <CardCategory
+                  thumb_src={category.thumb_src}
+                  title={category.title}
+                  collection={category.collection}
+                />
+              </div>
+            ))
+          }
+          <div class="my-3 col-12"></div>
+          {
+            data.categories.slice(0, 4).map((category) => (
+              <div class="col-md-6 col-lg-3">
+                <CardCategory
+                  thumb_src={category.thumb_src}
+                  title={category.title}
+                  collection={category.collection}
+                />
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

@@ -2,7 +2,7 @@
   "products": [
     {
       "id": "01",
-      "thumb_src": "/images/suit-3.jpg",
+      "thumb_src": "images/suit-3.jpg",
       "thumb_alt": "watch-image",
       "images": [
         {
@@ -65,7 +65,7 @@
     },
     {
       "id": "02",
-      "thumb_src": "/images/suit-1.jpg",
+      "thumb_src": "images/suit-1.jpg",
       "thumb_alt": "watch-image",
       "images": [
         {
@@ -125,7 +125,7 @@
     },
     {
       "id": "03",
-      "thumb_src": "/images/suit-2.jpg",
+      "thumb_src": "images/suit-2.jpg",
       "thumb_alt": "iMac-image",
       "images": [
         {
@@ -168,7 +168,7 @@
     },
     {
       "id": "04",
-      "thumb_src": "/images/suit-5.jpg",
+      "thumb_src": "images/suit-5.jpg",
       "thumb_alt": "iPhone_thumb",
       "color": "Blue",
       "title": "iPhone",

@@ -1,5 +1,6 @@
 interface ImportMetaEnv {
-  readonly API_URL: string;
+  readonly API_HOST: string;
+  readonly API_ENDPOINT: string;
   readonly API_TOKEN: string;
   readonly BASE_URL: string;
   // more env variables...

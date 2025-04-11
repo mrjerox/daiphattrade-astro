@@ -1,4 +1,5 @@
 ---
+import { BASE_URL } from "../../configs/constant.conf";
 import ProductBadge from "./ProductBadge.astro";
 
 interface Props {
@@ -10,6 +11,7 @@ interface Props {
   color: string;
   colors: string[];
   position: string;
+  href: string;
 }
 const {
   thumb_src,
@@ -20,16 +22,17 @@ const {
   color,
   colors,
   position,
+  href,
 }: Props = Astro.props;
 const classList = "card-body " + "text-" + position;
 ---
 
 <div class="card card-product border mb-5 shadow-xs border-radius-lg">
-  <a href="#">
+  <a href={href}>
     <div class="height-350">
       <img
         class="w-100 h-100 p-4 rounded-top"
-        src={`${import.meta.env.BASE_URL}${thumb_src}`}
+        src={`${BASE_URL}${thumb_src}`}
         alt={thumb_alt}
       />
     </div>

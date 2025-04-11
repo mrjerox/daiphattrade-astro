@@ -1,10 +1,10 @@
 ---
 interface Props {
-  featuresDetails: Map<string, string>;
+  featuresDetails: Map<string, string> | {};
 }
 
 const { featuresDetails }: Props = Astro.props;
-const prodFeatures: any[] = [];
+let prodFeatures: any[] = [];
 ---
 
 {

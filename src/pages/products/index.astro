@@ -1,0 +1,19 @@
+---
+import Layout from "@layouts/Layout.astro";
+import CategoryFilters from "@components/products/CategoryFilters.astro";
+---
+
+<Layout title="Products">
+  <main>
+    <section class="section1">
+      <div class="container">
+        <div class="mb-5 mt-8">
+          <CategoryFilters
+            title="Our products"
+            description="With inline actions and expandable sidebar filters"
+          />
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

@@ -4,13 +4,17 @@ import CardProduct from "./CardProduct.astro";
 
 interface Props {
   title: string;
+  description?: string;
 }
-const { title }: Props = Astro.props;
+const { title, description }: Props = Astro.props;
 ---
 
 <div class="card card-product card-plain">
-  <div class="d-flex border-bottom pb-3">
-    {title.length != 0 && <h2 class="mb-3">{title}</h2>}
+  <div class="d-flex border-bottom align-items-end pb-3">
+    <div class="category-heading">
+      {title.length != 0 && <h2>{title}</h2>}
+      {description && <p>{description}</p>}
+    </div>
     <div class="d-flex ms-auto align-items-center">
       <div class="dropdown">
         <button
@@ -317,6 +321,7 @@ const { title }: Props = Astro.props;
                   title={product.title}
                   description={product.description}
                   price={product.price}
+                  href={`/products/product-1`}
                   position="center"
                 />
               </div>
