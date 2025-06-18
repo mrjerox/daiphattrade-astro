@@ -1,5 +1,5 @@
 export const GET_GENERAL_OPTIONS_QUERY = `
-  query GetGeneralOptions {
+  query getGeneralOptionsQuery {
     themeGeneralSettingsPage {
       themesGeneralSettings {
         generalLogo {
@@ -12,59 +12,69 @@ export const GET_GENERAL_OPTIONS_QUERY = `
   }`;
 
 export const GET_HOME_OPTIONS_QUERY = `
-  query GetHomeOptions {
-    themeGeneralSettingsPage {
-      themesGeneralSettings {
-        homeBanner {
-          title
-          description
-          link
-          image {
-            node {
-              filePath
-            }
+query getHomeOptionsQuery {
+  homePageSettings {
+    home {
+      homeSs1 {
+        description
+        title
+        url
+        image {
+          node {
+            filePath
+            slug
+            title
+            altText
+            caption
           }
         }
-        homeCategory {
-          bannerDescription
-          bannerTitle
-          link
-          bannerImage {
-            node {
-              filePath
-            }
-          }
-          categories {
-            edges {
-              node {
-                id
-                slug
-                name
-              }
-            }
-          }
-        }
-        homeFeatures {
-          description
-          title
-          gallery {
-            edges {
-              node {
+      }
+      homeSs2 {
+        url
+        title
+        selectCategories {
+          nodes {
+            slug
+            name
+            uri
+            ... on ProductCategory {
+              image {
                 filePath
+                altText
+                slug
+                title
               }
             }
           }
         }
-        register {
-          description
-          title
-          image {
-            node {
-              filePath
-            }
+      }
+      homeSs3 {
+        description
+        url
+        title
+        image {
+          node {
+            altText
+            filePath
+            title
+            slug
+          }
+        }
+      }
+      homeSs4 {
+        content
+        description
+        title
+        gallery {
+          nodes {
+            altText
+            filePath
+            title
+            slug
           }
         }
       }
     }
   }
+}
 `;

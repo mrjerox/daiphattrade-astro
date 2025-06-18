@@ -1,71 +1,78 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import data from "@public/data.json";
 import CardCategory from "@components/products/CardCategory.astro";
 import ProductFeature from "@components/products/ProductFeature.astro";
 import PromoSectionLarge from "@components/promo/PromoSectionLarge.astro";
-import { optionsApi } from "@apis/optionsApi";
+import { MEDIA_HOST } from "@configs/constant.conf";
+import { wpQuery } from "@apis/graphqlClient";
+import { GET_HOME_OPTIONS_QUERY } from "@apis/queries";
 import { Debug } from "astro:components";
-import { API_HOST } from "src/configs/api.conf";
+import { API_SECRET_TOKEN } from "astro:env/server";
 
-// const generalOptions = await optionsApi.getGeneralOptions();
-const homeOptions = await optionsApi.getHomeOptions();
-const homeBanner =
-  homeOptions?.themeGeneralSettingsPage?.themesGeneralSettings?.homeBanner;
-const homeCategory =
-  homeOptions?.themeGeneralSettingsPage?.themesGeneralSettings?.homeCategory;
-const homeCategoryIds = homeCategory?.categories?.edges.map(
-  (category: any) => category.node.id
-);
+const { homePageSettings } = await wpQuery({
+  query: GET_HOME_OPTIONS_QUERY,
+  token: API_SECRET_TOKEN,
+});
+const { homeSs1, homeSs2, homeSs3, homeSs4 } = homePageSettings?.home;
 ---
 
-<Debug data={homeCategoryIds} />
-<Layout title="Home Page">
+<!-- <Debug data={test} /> -->
+<Layout title="Home - Daiphattrade.com">
   <main>
     <PromoSectionLarge
-      title={homeBanner?.title || ""}
-      full_description={homeBanner?.description || ""}
-      pageHeaderBgImg={API_HOST + homeBanner?.image?.node?.filePath ||
-        "../images/bg2.jpg"}
+      title={homeSs1?.title || ""}
+      full_description={homeSs1?.description || ""}
+      pageHeaderBgImg={homeSs1?.image?.node?.filePath
+        ? MEDIA_HOST + homeSs1?.image?.node?.filePath
+        : "../images/bg2.jpg"}
       pageHeaderMinVh="90vh"
-      buttonUrl={homeBanner?.link || ""}
-      buttonText={"Explore Our Categories"}
+      buttonUrl={homeSs1?.url || ""}
+      buttonText={"Explore Our Products"}
     />
     <div class="categories pt-8" id="categories">
       <div class="container">
         <div class="d-block text-center mb-5">
-          <h3>Shop by category</h3>
-          <a class="text-dark font-weight-bold" href="/categories"
+          <h3>{homeSs2?.title}</h3>
+          <a class="text-dark font-weight-bold" href={homeSs2?.url || "#"}
             >Browse all categories &#62;</a
           >
         </div>
         <div class="row mb-5">
           {
-            homeCategory?.categories?.edges.map((category: any) => (
-              <div class="col-md-6 col-lg-3">
-                <CardCategory
-                  thumb_src={category.thumb_src}
-                  collection={category.collection}
-                  title={category.title}
-                />
-              </div>
-            ))
+            homeSs2?.selectCategories?.nodes.map((category: any) => {
+              return (
+                <div class="col-md-6 col-lg-3">
+                  <CardCategory
+                    thumb_src={
+                      category?.image?.filePath
+                        ? MEDIA_HOST + category?.image?.filePath
+                        : ""
+                    }
+                    collection=""
+                    title={category?.name}
+                    url={`/categories/${category?.slug}`}
+                  />
+                </div>
+              );
+            })
           }
         </div>
-
         <PromoSectionLarge
-          title="Product Suggestions"
-          full_description="Tailored product suggestions just for you discover items that match your preferences, needs, and style. Whether you're shopping for essentials or something special, we've got the perfect picks lined up."
-          pageHeaderBgImg={"../images/bg2.jpg"}
+          title={homeSs3?.title || ""}
+          full_description={homeSs3?.description || ""}
+          pageHeaderBgImg={homeSs3?.image?.node?.filePath
+            ? MEDIA_HOST + homeSs3?.image?.node?.filePath
+            : ""}
+          buttonUrl={homeSs3?.url || "#"}
           pageHeaderMinVh="50vh"
           pageHeaderRadius="1rem"
         />
-        <div class="my-5">
+        <div class="mt-8 mb-5">
           <ProductFeature
-            title="Product Features"
-            images={data.products[2].images || []}
-            full_description="Society has put up so many boundaries, so many limitations on what’s right and wrong that it's almost impossible"
-            featuresDetails={data.products[0].featuresDetails || {}}
+            title={homeSs4?.title || ""}
+            images={homeSs4?.gallery?.nodes || []}
+            full_description={homeSs4?.description || ""}
+            content={homeSs4?.content || ""}
           />
         </div>
         <div

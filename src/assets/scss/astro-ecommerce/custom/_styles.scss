@@ -5,3 +5,10 @@
 .z-index-10 {
   z-index: 10 !important;
 }
+
+.product-excerpt {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}

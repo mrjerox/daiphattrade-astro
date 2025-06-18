@@ -1,88 +1,157 @@
 ---
 interface Props {
-  data: Map<string, string>;
+  data?: any;
+  description?: string;
 }
-const { data }: Props = Astro.props;
-const accordion: any[] = [];
-let i = 0;
+const { data, description }: Props = Astro.props;
+
+const { productBenefits, productHowtouse, productOtherinfo } = data;
 ---
 
-{
-  Object.entries(data).map(([title, value], i) => {
-    if (i != 0) {
-      accordion.push(
-        <div class="accordion-item">
-          <h5 class="accordion-header" id={"heading" + i}>
-            <button
-              class="accordion-button border-bottom font-weight-bold py-4"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target={"#collapse" + i}
-              aria-expanded="false"
-              aria-controls={"collapse" + i}
-            >
-              {title}
-              <i
-                class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0 me-3"
-                aria-hidden="true"
-              />
-              <i
-                class="collapse-open fa fa-minus text-xs pt-1 position-absolute end-0 me-3"
-                aria-hidden="true"
-              />
-            </button>
-          </h5>
-          <div
-            id={"collapse" + i}
-            class="accordion-collapse collapse"
-            aria-labelledby={"heading" + i}
-            data-bs-parent="#accordionEcommerce"
-          >
-            <div class="accordion-body text-body text-sm opacity-8">
-              {value}
-            </div>
-          </div>
-        </div>
-      );
-    } else {
-      accordion.push(
-        <div class="accordion-item">
-          <h5 class="accordion-header" id={"heading" + i}>
-            <button
-              class="accordion-button border-bottom font-weight-bold collapsed py-4"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target={"#collapse" + i}
-              aria-expanded="true"
-              aria-controls={"collapse" + i}
-            >
-              {title}
-              <i
-                class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0 me-3"
-                aria-hidden="true"
-              />
-              <i
-                class="collapse-open fa fa-minus text-xs pt-1 position-absolute end-0 me-3"
-                aria-hidden="true"
-              />
-            </button>
-          </h5>
-          <div
-            id={"collapse" + i}
-            class="accordion-collapse collapse show"
-            aria-labelledby={"heading" + i}
-            data-bs-parent="#accordionEcommerce"
-          >
-            <div class="accordion-body text-body text-sm opacity-8">
-              {value}
-            </div>
-          </div>
-        </div>
-      );
-    }
-  })
-}
-
 <div class="accordion mt-5" id="accordionEcommerce">
-  {accordion}
+  {
+    description && (
+      <div class="accordion-item">
+        <h5 class="accordion-header" id="accordionDesc">
+          <button
+            class="accordion-button border-bottom font-weight-bold py-4"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseDesc"
+            aria-expanded="false"
+            aria-controls="collapseDesc"
+          >
+            Description
+            <i
+              class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0 me-3"
+              aria-hidden="true"
+            />
+            <i
+              class="collapse-open fa fa-minus text-xs pt-1 position-absolute end-0 me-3"
+              aria-hidden="true"
+            />
+          </button>
+        </h5>
+        <div
+          id="collapseDesc"
+          class="accordion-collapse collapse show"
+          aria-labelledby="headingDesc"
+          data-bs-parent="#accordionEcommerce"
+        >
+          <div class="accordion-body text-body text-sm opacity-8">
+            {description && <Fragment set:html={description} />}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  {
+    productBenefits && (
+      <div class="accordion-item">
+        <h5 class="accordion-header" id="accordionBenefits">
+          <button
+            class="accordion-button border-bottom font-weight-bold py-4 collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseBenefits"
+            aria-expanded="false"
+            aria-controls="collapseBenefits"
+          >
+            Benefits
+            <i
+              class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0 me-3"
+              aria-hidden="true"
+            />
+            <i
+              class="collapse-open fa fa-minus text-xs pt-1 position-absolute end-0 me-3"
+              aria-hidden="true"
+            />
+          </button>
+        </h5>
+        <div
+          id="collapseBenefits"
+          class="accordion-collapse collapse"
+          aria-labelledby="headingBenefits"
+          data-bs-parent="#accordionEcommerce"
+        >
+          <div class="accordion-body text-body text-sm opacity-8">
+            {productBenefits && <Fragment set:html={productBenefits} />}
+          </div>
+        </div>
+      </div>
+    )
+  }
+  {
+    productHowtouse && (
+      <div class="accordion-item">
+        <h5 class="accordion-header" id="accordionHowtouse">
+          <button
+            class="accordion-button border-bottom font-weight-bold py-4 collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseHowtouse"
+            aria-expanded="false"
+            aria-controls="collapseHowtouse"
+          >
+            How to use
+            <i
+              class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0 me-3"
+              aria-hidden="true"
+            />
+            <i
+              class="collapse-open fa fa-minus text-xs pt-1 position-absolute end-0 me-3"
+              aria-hidden="true"
+            />
+          </button>
+        </h5>
+        <div
+          id="collapseHowtouse"
+          class="accordion-collapse collapse"
+          aria-labelledby="headingHowtouse"
+          data-bs-parent="#accordionEcommerce"
+        >
+          <div class="accordion-body text-body text-sm opacity-8">
+            {productHowtouse && <Fragment set:html={productHowtouse} />}
+          </div>
+        </div>
+      </div>
+    )
+  }
+  {
+    productOtherinfo && (
+      <div class="accordion-item">
+        <h5 class="accordion-header" id="accordionOtherinfo">
+          <button
+            class="accordion-button border-bottom font-weight-bold collapsed py-4"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseOtherinfo"
+            aria-expanded="false"
+            aria-controls="collapseOtherinfo"
+          >
+            Other Information
+            <i
+              class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0 me-3"
+              aria-hidden="true"
+            />
+            <i
+              class="collapse-open fa fa-minus text-xs pt-1 position-absolute end-0 me-3"
+              aria-hidden="true"
+            />
+          </button>
+        </h5>
+        <div
+          id="collapseOtherinfo"
+          class="accordion-collapse collapse"
+          aria-labelledby="headingOtherinfo"
+          data-bs-parent="#accordionEcommerce"
+        >
+          <div class="accordion-body text-body text-sm opacity-8">
+            {productOtherinfo && <Fragment set:html={productOtherinfo} />}
+          </div>
+        </div>
+      </div>
+    )
+  }
 </div>

@@ -1,19 +1,43 @@
 ---
 interface Props {
-  images: {
-    src: string;
-    alt: string;
-  }[];
+  primaryImage?: any;
+  images: any[];
 }
-const { images }: Props = Astro.props;
+const { images, primaryImage }: Props = Astro.props;
+import { MEDIA_HOST } from "@configs/constant.conf";
 ---
 
 <div class="col-12 col-lg-6">
-  <img class="w-90 rounded-2" src={images[0].src} alt={images[0].alt} />
+  <img
+    class="w-90 rounded-2"
+    src={primaryImage?.filePath ? MEDIA_HOST + primaryImage.filePath : ""}
+    alt={primaryImage?.alt}
+    id="primaryImage"
+  />
   <div class="d-flex mt-4">
-    <img class="w-20 me-4 rounded-2" src={images[0].src} alt={images[0].alt} />
-    <img class="w-20 me-4 rounded-2" src={images[1].src} alt={images[1].alt} />
-    <img class="w-20 me-4 rounded-2" src={images[2].src} alt={images[2].alt} />
-    <img class="w-20 rounded-2" src={images[3].src} alt={images[3].alt} />
+    {
+      images.map((image: any, index: number) => {
+        if (index < 4) {
+          return (
+            <img
+              class="w-20 me-4 rounded-2 ratio ratio-1x1 object-fit-cover"
+              style="aspect-ratio: 1 / 1;"
+              src={image?.filePath ? MEDIA_HOST + image.filePath : ""}
+              alt={image?.alt || ""}
+            />
+          );
+        }
+        if (index === 4) {
+          return (
+            <img
+              class="w-20 rounded-2 ratio ratio-1x1 object-fit-cover"
+              style="aspect-ratio: 1 / 1;"
+              src={image?.filePath ? MEDIA_HOST + image.filePath : ""}
+              alt={image?.alt || ""}
+            />
+          );
+        }
+      })
+    }
   </div>
 </div>

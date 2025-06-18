@@ -1,7 +1,15 @@
 import axios, { AxiosError } from 'axios';
-import type { InternalAxiosRequestConfig, AxiosResponse } from 'axios';
-import { API_HOST, API_ENDPOINT, API_TOKEN } from '../configs/api.conf';
+import type { AxiosResponse } from 'axios';
+import { API_HOST, API_ENDPOINT } from '../configs/api.conf';
 import type { GraphQLRequest, GraphQLResponse } from '../configs/interface.conf';
+import { API_SECRET_TOKEN } from 'astro:env/server';
+
+// Type
+interface gqlParams {
+  query: string;
+  variables?: {};
+  token?: string;
+}
 
 // Create axios instance for GraphQL
 const graphqlClient = axios.create({
@@ -10,29 +18,16 @@ const graphqlClient = axios.create({
     'Content-Type': 'application/json; charset=utf-8',
     'Accept': 'application/json',
     'Access-Control-Allow-Origin': '*',
-    'Authorization': `Basic ${API_TOKEN}`
+    'Authorization': `Basic ${API_SECRET_TOKEN}`
   },
   timeout: 30000,
 });
-
-// Request interceptor
-// graphqlClient.interceptors.request.use(
-//   (config: InternalAxiosRequestConfig) => {
-//     // if (API_TOKEN) {
-//     //   config.headers.Authorization = `Basic ${API_TOKEN}`;
-//     // }
-//     return config;
-//   },
-//   (error: AxiosError) => {
-//     return Promise.reject(error);
-//   }
-// );
 
 // Response interceptor
 graphqlClient.interceptors.response.use(
   (response: AxiosResponse) => {
     const graphqlResponse = response.data as GraphQLResponse;
-    
+
     // Check for GraphQL errors
     if (graphqlResponse.errors && graphqlResponse.errors.length > 0) {
       const error = new AxiosError(
@@ -44,7 +39,7 @@ graphqlClient.interceptors.response.use(
       );
       return Promise.reject(error);
     }
-    
+
     return response;
   },
   (error: AxiosError) => {
@@ -80,4 +75,27 @@ export const executeGraphQL = async <T = any>(
     }
     throw new Error('Unknown error occurred');
   }
-}; 
+};
+
+// Default
+export const wpQuery = async ({ query, variables = {}, token }: gqlParams) => {
+  const res = await fetch(API_HOST + API_ENDPOINT, {
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+      'Accept': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Authorization': `Basic ${token || API_SECRET_TOKEN}`
+    },
+    method: 'POST',
+    body: JSON.stringify({
+      query,
+      variables,
+    }),
+  });
+  if (!res.ok) {
+    console.error(res);
+    return {};
+  }
+  const { data } = await res.json();
+  return data;
+}

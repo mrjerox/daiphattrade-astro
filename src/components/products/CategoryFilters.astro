@@ -1,12 +1,18 @@
 ---
+import { MEDIA_HOST } from "@configs/constant.conf";
 import data from "../../../public/data.json";
 import CardProduct from "./CardProduct.astro";
 
 interface Props {
   title: string;
   description?: string;
+  categories?: any[];
+  brands?: any[];
+  origins?: any[];
+  products?: any[];
 }
-const { title, description }: Props = Astro.props;
+const { title, description, categories, brands, origins, products }: Props =
+  Astro.props;
 ---
 
 <div class="card card-product card-plain">
@@ -24,21 +30,20 @@ const { title, description }: Props = Astro.props;
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
-          Sort
+          Sort <i class="fa-solid fa-filter"></i>
         </button>
         <ul class="dropdown-menu" aria-labelledby="sortButton">
           <li>
-            <a class="dropdown-item" href="javascript:;">Most Popular</a>
+            <a class="dropdown-item" href="javascript:;">Newest</a>
           </li>
-          <li>
-            <a class="dropdown-item" href="javascript:;">Best Rating</a>
-          </li>
-          <li><a class="dropdown-item" href="javascript:;">Newest</a></li>
           <li>
             <a class="dropdown-item" href="javascript:;">Price: Low to High</a>
           </li>
           <li>
             <a class="dropdown-item" href="javascript:;">Price: High to Low</a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="javascript:;">Oldest</a>
           </li>
         </ul>
       </div>
@@ -47,24 +52,26 @@ const { title, description }: Props = Astro.props;
   <div class="row mt-5">
     <div class="col-12 col-md-4">
       <ul class="list-unstyled ms-3">
-        <li class="mb-2"><a href="#">Man</a></li>
-        <li class="mb-2"><a href="#">Woman</a></li>
-        <li class="mb-2"><a href="#">Sales</a></li>
-        <li class="mb-2"><a href="#">Permanent Collection</a></li>
-        <li class="mb-2"><a href="#">New</a></li>
+        {
+          categories?.map((category) => (
+            <li class="mb-2">
+              <a href={`/categories/${category?.slug}`}>{category?.name}</a>
+            </li>
+          ))
+        }
       </ul>
       <div class="accordion" id="accordionArrivals">
         <div class="accordion-item">
-          <h5 class="accordion-header" id="headingThree">
+          <h5 class="accordion-header" id="headingBrands">
             <button
               class="accordion-button border-bottom border-top font-weight-bold py-4"
               type="button"
               data-bs-toggle="collapse"
-              data-bs-target="#collapseThree"
+              data-bs-target="#collapseBrands"
               aria-expanded="false"
-              aria-controls="collapseThree"
+              aria-controls="collapseBrands"
             >
-              Designers
+              Brands
               <i
                 class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0 me-3"
                 aria-hidden="true"></i>
@@ -74,81 +81,44 @@ const { title, description }: Props = Astro.props;
             </button>
           </h5>
           <div
-            id="collapseThree"
+            id="collapseBrands"
             class="accordion-collapse collapse"
-            aria-labelledby="headingThree"
+            aria-labelledby="headingBrands"
             data-bs-parent="#accordionArrivals"
           >
             <div class="accordion-body text-sm opacity-8">
-              <div class="form-check justify-content-start">
-                <input
-                  class="form-check-input me-2"
-                  type="checkbox"
-                  value=""
-                  id="customCheck1"
-                />
-                <label class="custom-control-label mb-0">Marc Jacobs</label>
-              </div>
-              <div class="form-check justify-content-start">
-                <input
-                  class="form-check-input me-2"
-                  type="checkbox"
-                  value=""
-                  id="customCheck2"
-                />
-                <label class="custom-control-label mb-0">Burberry</label>
-              </div>
-              <div class="form-check justify-content-start">
-                <input
-                  class="form-check-input me-2"
-                  type="checkbox"
-                  value=""
-                  id="customCheck3"
-                  checked
-                />
-                <label class="custom-control-label mb-0">Coco Chanel</label>
-              </div>
-              <div class="form-check justify-content-start">
-                <input
-                  class="form-check-input me-2"
-                  type="checkbox"
-                  value=""
-                  id="customCheck4"
-                />
-                <label class="custom-control-label mb-0">Tom Ford</label>
-              </div>
-              <div class="form-check justify-content-start">
-                <input
-                  class="form-check-input me-2"
-                  type="checkbox"
-                  value=""
-                  id="customCheck5"
-                />
-                <label class="custom-control-label mb-0">Alexander Wang</label>
-              </div>
-              <div class="form-check justify-content-start">
-                <input
-                  class="form-check-input me-2"
-                  type="checkbox"
-                  value=""
-                  id="customCheck6"
-                />
-                <label class="custom-control-label mb-0">Valentino</label>
-              </div>
+              {
+                brands?.map((brand) => (
+                  <div class="form-check justify-content-start">
+                    <input
+                      class="form-check-input me-2 mt-0"
+                      type="checkbox"
+                      value=""
+                      id={`customCheck${brand?.id}`}
+                    />
+                    <label
+                      class="custom-control-label mb-0"
+                      for={`customCheck${brand?.id}`}
+                    >
+                      {brand?.name}
+                    </label>
+                  </div>
+                ))
+              }
             </div>
           </div>
         </div>
         <div class="accordion-item">
-          <h5 class="accordion-header" id="headingFour">
+          <h5 class="accordion-header" id="headingOrigins">
             <button
               class="accordion-button border-bottom font-weight-bold py-4"
               type="button"
               data-bs-toggle="collapse"
-              data-bs-target="#collapseFour"
+              data-bs-target="#collapseOrigins"
               aria-expanded="false"
-              aria-controls="collapseFour"
+              aria-controls="collapseOrigins"
             >
-              Material
+              Origins
               <i
                 class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0 me-3"
                 aria-hidden="true"></i>
@@ -158,150 +128,30 @@ const { title, description }: Props = Astro.props;
             </button>
           </h5>
           <div
-            id="collapseFour"
+            id="collapseOrigins"
             class="accordion-collapse collapse"
-            aria-labelledby="headingFour"
+            aria-labelledby="headingOrigins"
             data-bs-parent="#accordionArrivals"
           >
             <div class="accordion-body text-sm opacity-8">
-              <div class="form-check justify-content-start">
-                <input
-                  class="form-check-input me-2"
-                  type="checkbox"
-                  value=""
-                  id="customCheck7"
-                />
-                <label class="custom-control-label mb-0">Cotton</label>
-              </div>
-              <div class="form-check justify-content-start">
-                <input
-                  class="form-check-input me-2"
-                  type="checkbox"
-                  value=""
-                  id="customCheck8"
-                />
-                <label class="custom-control-label mb-0">Leather</label>
-              </div>
-              <div class="form-check justify-content-start">
-                <input
-                  class="form-check-input me-2"
-                  type="checkbox"
-                  value=""
-                  id="customCheck9"
-                  checked
-                />
-                <label class="custom-control-label mb-0">Chiffon</label>
-              </div>
-              <div class="form-check justify-content-start">
-                <input
-                  class="form-check-input me-2"
-                  type="checkbox"
-                  value=""
-                  id="customCheck10"
-                />
-                <label class="custom-control-label mb-0">Crepe</label>
-              </div>
-              <div class="form-check justify-content-start">
-                <input
-                  class="form-check-input me-2"
-                  type="checkbox"
-                  value=""
-                  id="customCheck11"
-                />
-                <label class="custom-control-label mb-0">Denim</label>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="accordion-item">
-          <h5 class="accordion-header" id="headingFifth">
-            <button
-              class="accordion-button border-bottom font-weight-bold py-4"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#collapseFifth"
-              aria-expanded="false"
-              aria-controls="collapseFifth"
-            >
-              Size
-              <i
-                class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0 me-3"
-                aria-hidden="true"></i>
-              <i
-                class="collapse-open fa fa-minus text-xs pt-1 position-absolute end-0 me-3"
-                aria-hidden="true"></i>
-            </button>
-          </h5>
-          <div
-            id="collapseFifth"
-            class="accordion-collapse collapse"
-            aria-labelledby="headingFifth"
-            data-bs-parent="#accordionArrivals"
-          >
-            <div class="accordion-body text-sm opacity-8">
-              <div class="form-check justify-content-start">
-                <input
-                  class="form-check-input me-2"
-                  type="checkbox"
-                  value=""
-                  id="customSize1"
-                />
-                <label class="custom-control-label mb-0">XXS</label>
-              </div>
-              <div class="form-check justify-content-start">
-                <input
-                  class="form-check-input me-2"
-                  type="checkbox"
-                  value=""
-                  id="customSize2"
-                />
-                <label class="custom-control-label mb-0">XS</label>
-              </div>
-              <div class="form-check justify-content-start">
-                <input
-                  class="form-check-input me-2"
-                  type="checkbox"
-                  value=""
-                  id="customSize3"
-                />
-                <label class="custom-control-label mb-0">S</label>
-              </div>
-              <div class="form-check justify-content-start">
-                <input
-                  class="form-check-input me-2"
-                  type="checkbox"
-                  value=""
-                  id="customSize4"
-                />
-                <label class="custom-control-label mb-0">M</label>
-              </div>
-              <div class="form-check justify-content-start">
-                <input
-                  class="form-check-input me-2"
-                  type="checkbox"
-                  value=""
-                  id="customSize5"
-                />
-                <label class="custom-control-label mb-0">L</label>
-              </div>
-              <div class="form-check justify-content-start">
-                <input
-                  class="form-check-input me-2"
-                  type="checkbox"
-                  value=""
-                  id="customSize6"
-                />
-                <label class="custom-control-label mb-0">XL</label>
-              </div>
-              <div class="form-check justify-content-start">
-                <input
-                  class="form-check-input me-2"
-                  type="checkbox"
-                  value=""
-                  id="customSize7"
-                />
-                <label class="custom-control-label mb-0">XXL</label>
-              </div>
+              {
+                origins?.map((origin) => (
+                  <div class="form-check justify-content-start">
+                    <input
+                      class="form-check-input me-2 mt-0"
+                      type="checkbox"
+                      value=""
+                      id={`customCheck${origin?.id}`}
+                    />
+                    <label
+                      class="custom-control-label mb-0"
+                      for={`customCheck${origin?.id}`}
+                    >
+                      {origin?.name}
+                    </label>
+                  </div>
+                ))
+              }
             </div>
           </div>
         </div>
@@ -311,17 +161,21 @@ const { title, description }: Props = Astro.props;
       <div class="d-flex h-100">
         <div class="row">
           {
-            data.products.slice(0, 3).map((product) => (
+            products?.map((product) => (
               <div class="col-md-6 col-lg-4">
                 <CardProduct
-                  thumb_src={product.thumb_src}
-                  thumb_alt={product.thumb_alt}
-                  color={product.color}
+                  thumb_src={
+                    product?.image?.filePath
+                      ? MEDIA_HOST + product?.image?.filePath
+                      : ""
+                  }
+                  thumb_alt={product?.image?.altText || ""}
+                  color=""
                   colors={product.colors ?? []}
-                  title={product.title}
-                  description={product.description}
-                  price={product.price}
-                  href={`/products/product-1`}
+                  title={product?.title}
+                  description={product?.excerpt}
+                  price={product?.price}
+                  href={`/products/${product?.slug}`}
                   position="center"
                 />
               </div>

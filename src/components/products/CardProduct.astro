@@ -8,8 +8,6 @@ interface Props {
   title: string;
   description: string;
   price: number;
-  color: string;
-  colors: string[];
   position: string;
   href: string;
 }
@@ -19,8 +17,6 @@ const {
   title,
   description,
   price,
-  color,
-  colors,
   position,
   href,
 }: Props = Astro.props;
@@ -32,27 +28,30 @@ const classList = "card-body " + "text-" + position;
     <div class="height-350">
       <img
         class="w-100 h-100 p-4 rounded-top"
-        src={`${BASE_URL}${thumb_src}`}
+        src={thumb_src}
         alt={thumb_alt}
       />
     </div>
     <div class={classList}>
-      {color && <h6 class="text-md mb-1 text-body">{color}</h6>}
       {title && <h4 class="font-weight-bold">{title}</h4>}
-      {description && <p class="text-body">{description}</p>}
-      {colors && <ProductBadge colors={colors} />}
+      {
+        description && (
+          <div class="text-body product-excerpt">
+            <Fragment set:html={description} />
+          </div>
+        )
+      }
       {
         price && (
-          <h4 class="mb-0 text-lg mt-1 mb-3">${price.toLocaleString()}</h4>
+          <h4 class="mb-0 text-lg mt-2 mb-3">${price.toLocaleString()}</h4>
         )
       }
-      {
-        !(description || colors || color) && (
-          <a href="#" class="font-weight-normal text-body text-sm">
-            Shop Now
-          </a>
-        )
-      }
+      <a
+        href={href}
+        class="btn btn-dark btn-sm d-flex align-items-center mx-auto text-center justify-content-center"
+      >
+        Buy now
+      </a>
     </div>
   </a>
 </div>

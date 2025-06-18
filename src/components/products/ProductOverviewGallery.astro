@@ -1,37 +1,34 @@
 ---
-import ProductBadge from "./ProductBadge.astro";
-import ProductRating from "./ProductRating.astro";
 import ProductAccordion from "./ProductAccordion.astro";
 import ProductImages from "./ProductImages.astro";
 
 interface Props {
   title: string;
   price: number;
-  images: {
-    src: string;
-    alt: string;
-  }[];
-  colors: string[];
-  rating: number;
-  reviews: number;
+  primaryImage?: string;
+  images: any[];
   full_description: string;
   data: any;
+  description?: string;
 }
 const {
   title,
   price,
+  primaryImage,
   images,
-  colors,
-  rating,
-  reviews,
   full_description,
+  description,
   data,
 }: Props = Astro.props;
 ---
 
 <div class="card card-product card-plain">
   <div class="row">
-    {images.length != 0 && <ProductImages images={images} />}
+    {
+      images.length != 0 && (
+        <ProductImages primaryImage={primaryImage} images={images} />
+      )
+    }
     <div class="col-12 col-lg-6 mt-5 mt-lg-0">
       {title.length != 0 && <h2>{title}</h2>}
       {
@@ -44,33 +41,13 @@ const {
           </>
         )
       }
-      <p class="mt-4">{full_description}</p>
-
-      {
-        rating != 0 && (
-          <div class="d-flex align-items-center">
-            <ProductRating rating={rating} reviews={reviews} />
-            <span class="ms-2">100 reviews</span>
-          </div>
-        )
-      }
-
-      {
-        colors.length != 0 && (
-          <>
-            <h6 class="mt-4">Color:</h6>
-            {colors && <ProductBadge colors={colors} />}
-          </>
-        )
-      }
-
+      <div class="product-description mt-4">
+        <Fragment set:html={description} />
+      </div>
       <div class="d-flex align-items-center mt-4">
         <button class="btn btn-dark btn-lg mb-0 me-4">Add to Cart</button>
-        <a href="#favorite">
-          <i id="heart1" class="far fa-heart text-2xl"></i>
-        </a>
       </div>
-      <ProductAccordion data={data} />
+      <ProductAccordion data={data} description={full_description} />
     </div>
   </div>
 </div>

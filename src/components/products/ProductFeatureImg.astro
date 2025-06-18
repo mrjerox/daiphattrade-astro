@@ -1,35 +1,43 @@
 ---
 interface Props {
   images: {
-    src: string;
-    alt: string;
+    filePath: string;
+    altText: string;
   }[];
 }
+import { MEDIA_HOST } from "../../configs/constant.conf";
 const { images }: Props = Astro.props;
+const images2 = images.filter((_, index) => index !== 0);
 ---
 
 <>
-  <div class="d-block d-md-flex">
-    <img
-      class="w-100 max-height-200 rounded-3 mb-4 mb-md-0"
-      src={`${import.meta.env.BASE_URL}images/product7.jpg`}
-      alt={images[0].alt}
-    />
-  </div>
+  {
+    images.map((image, index) => {
+      if (index === 0) {
+        return (
+          <div class="d-block d-md-flex">
+            <img
+              class="w-100 max-height-200 rounded-3 mb-4 mb-md-0"
+              src={MEDIA_HOST + image.filePath}
+              alt={image.altText}
+            />
+          </div>
+        );
+      }
+    })
+  }
+
   <div class="row mt-4">
-    <div class="col-6">
-      <img
-        class="w-100 max-height-200 rounded-3"
-        src={`${import.meta.env.BASE_URL}images/product8.jpg`}
-        alt={images[2].alt}
-      />
-    </div>
-    <div class="col-6">
-      <img
-        class="w-100 max-height-200 rounded-3"
-        src={`${import.meta.env.BASE_URL}images/product9.jpg`}
-        alt={images[3].alt}
-      />
-    </div>
+    {
+      images2.map((image, index) => (
+        <div class="col-6">
+          <img
+            class="w-100 max-height-200 rounded-3"
+            src={MEDIA_HOST + image.filePath}
+            alt={image.altText}
+          />
+        </div>
+      ))
+    }
   </div>
 </>

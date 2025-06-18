@@ -29,7 +29,7 @@
 
     if (document.getElementsByClassName("navbar-collapse")[0]) {
       var fixedplugin = document.querySelector(
-        ".navbar:not(.navbar-expand-lg) .navbar-collapse"
+        ".navbar:not(.navbar-expand-lg) .navbar-collapse",
       );
       var ps2 = new PerfectScrollbar(fixedplugin);
     }
@@ -46,7 +46,7 @@ navbarBlurOnScroll("navbarBlur");
 
 // initialization of Popovers
 var popoverTriggerList = [].slice.call(
-  document.querySelectorAll('[data-bs-toggle="popover"]')
+  document.querySelectorAll('[data-bs-toggle="popover"]'),
 );
 var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
   return new bootstrap.Popover(popoverTriggerEl);
@@ -54,7 +54,7 @@ var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
 
 // initialization of Tooltips
 var tooltipTriggerList = [].slice.call(
-  document.querySelectorAll('[data-bs-toggle="tooltip"]')
+  document.querySelectorAll('[data-bs-toggle="tooltip"]'),
 );
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
   return new bootstrap.Tooltip(tooltipTriggerEl);
@@ -68,7 +68,7 @@ if (document.querySelector(".fixed-plugin")) {
   var fixedPluginButtonNav = document.querySelector(".fixed-plugin-button-nav");
   var fixedPluginCard = document.querySelector(".fixed-plugin .card");
   var fixedPluginCloseButton = document.querySelectorAll(
-    ".fixed-plugin-close-button"
+    ".fixed-plugin-close-button",
   );
   var navbar = document.getElementById("navbarBlur");
   var buttonNavbarFixed = document.getElementById("navbarFixed");
@@ -154,7 +154,7 @@ total.forEach(function (item, i) {
             }
             moving_div.style.transform = "translate3d(0px," + sum + "px, 0px)";
             moving_div.style.height = item.querySelector(
-              "li:nth-child(" + j + ")"
+              "li:nth-child(" + j + ")",
             ).offsetHeight;
           } else {
             for (var j = 1; j <= nodes.indexOf(li); j++) {
@@ -202,7 +202,7 @@ window.addEventListener("resize", function (event) {
         moving_div.style.width =
           item.querySelector("li:nth-child(" + index + ")").offsetWidth + "px";
         moving_div.style.height = item.querySelector(
-          "li:nth-child(" + j + ")"
+          "li:nth-child(" + j + ")",
         ).offsetHeight;
       } else {
         for (var j = 1; j <= nodes.indexOf(li); j++) {
@@ -340,7 +340,7 @@ function navbarBlurOnScroll(id) {
   function toggleNavLinksColor(type) {
     let navLinks = document.querySelectorAll(".navbar-main .nav-link");
     let navLinksToggler = document.querySelectorAll(
-      ".navbar-main .sidenav-toggler-line"
+      ".navbar-main .sidenav-toggler-line",
     );
 
     if (type === "blur") {

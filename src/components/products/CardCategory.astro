@@ -6,20 +6,22 @@ interface Props {
   collection: string;
   classList?: string;
   cta?: string;
+  url?: string;
 }
-const { thumb_src, title, collection, classList, cta }: Props = Astro.props;
+const { thumb_src, title, collection, classList, cta, url }: Props =
+  Astro.props;
 const classBody =
   cta != null ? "align-items-end d-flex" : "text-center w-100 pt-8";
 ---
 
-<a href="#">
+<a href={url}>
   <div
     class={`card card-background align-items-start mb-4 mb-lg-0 ${classList}`}
   >
     <div
       class="full-background"
       style={{
-        backgroundImage: `url(${BASE_URL + thumb_src})`,
+        backgroundImage: `url(${thumb_src})`,
         backgroundSize: "cover",
       }}
     >
@@ -29,7 +31,7 @@ const classBody =
         <p class="text-white font-weight-bold mb-1">{collection}</p>
         <h4 class="text-white font-weight-bolder">{title}</h4>
         {/* {(cta != null) &&  */}
-        <a href="#" class="text-white text-sm font-weight-semibold mb-0">
+        <a href={url} class="text-white text-sm font-weight-semibold mb-0">
           See products &#62;
         </a>
         {/* } */}

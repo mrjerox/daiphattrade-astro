@@ -1,39 +1,39 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import ProductOverviewGallery from "@components/products/ProductOverviewGallery.astro";
-import data from "@public/data.json";
 import CardProduct from "@components/products/CardProduct.astro";
+import { wpQuery } from "@apis/graphqlClient";
+import { GET_PRODUCT_QUERY } from "@apis/queries";
+import { Debug } from "astro:components";
+import { ProductIdTypeEnum } from "@configs/graphql";
+import { MEDIA_HOST } from "@configs/constant.conf";
 
 const { slug } = Astro.params;
 
-export async function getStaticPaths() {
-  let data = ["product-1", "product-2"];
-
-  return data.map((item) => ({
-    params: { slug: item },
-    props: { post: item },
-  }));
-}
+const { product } = await wpQuery({
+  query: GET_PRODUCT_QUERY,
+  variables: {
+    id: slug,
+    idType: ProductIdTypeEnum.Slug,
+    where: {},
+    first: 4,
+  },
+});
 ---
 
-<Layout title="Products">
+<Layout title={product?.name || ""}>
   <main>
     <section class="section1 py-5">
       <div class="container">
         <div class="my-5">
-          <h3>Product Overview</h3>
-          <p class="mb-5">
-            Product Overviews with image gallery and expandable details
-          </p>
           <ProductOverviewGallery
-            colors={data.products[1].colors ?? []}
-            images={data.products[1].images ?? []}
-            title={data.products[1].title ?? ""}
-            full_description={data.products[1].full_description ?? ""}
-            price={data.products[1].price ?? 0}
-            rating={data.products[1].rating ?? 0}
-            reviews={data.products[1].reviews ?? 0}
-            data={data.products[1].data}
+            primaryImage={product?.image}
+            images={product?.galleryImages?.nodes || []}
+            title={product?.name || ""}
+            description={product?.excerpt || ""}
+            full_description={product?.content || ""}
+            price={product?.price || ""}
+            data={product?.productAcf}
           />
         </div>
       </div>
@@ -41,20 +41,18 @@ export async function getStaticPaths() {
     <section class="section2 pb-5">
       <div class="container">
         <h3>Related Products</h3>
-        <p>Components and blocks for Product Lists</p>
+        <p>Explore more of our products</p>
         <div class="row mt-5">
           {
-            data.products.map((product) => (
+            product?.related?.nodes?.map((relatedProduct: any) => (
               <div class="col-md-6 col-lg-3">
                 <CardProduct
-                  href={`/products/product-1`}
-                  thumb_src={product.thumb_src}
-                  thumb_alt={product.thumb_alt}
-                  color={product.color}
-                  colors={product.colors ?? []}
-                  title={product.title}
-                  description={product.description}
-                  price={product.price}
+                  href={`/products/${relatedProduct?.slug}`}
+                  thumb_src={MEDIA_HOST + relatedProduct?.image?.filePath}
+                  thumb_alt={relatedProduct?.image?.altText || ""}
+                  title={relatedProduct?.name}
+                  description={relatedProduct?.excerpt || ""}
+                  price={relatedProduct.price}
                   position="center"
                 />
               </div>

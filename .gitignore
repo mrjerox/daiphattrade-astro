@@ -1,9 +1,11 @@
 CHANGELOG.md
 package-lock.json
 node_modules
+dist
 .env
 .env.development
 .env.production
 .astro
 .DS_Store
 .vscode
+.netlify
