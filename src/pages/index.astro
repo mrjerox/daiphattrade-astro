@@ -25,16 +25,8 @@ const { homePageSettings } = await wpQuery({
     <h1>test</h1>
   </main>
   <script>
-const res = await fetch('https://apache.tnhs.xyz/graphql', {
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-      Accept: "application/json",
-      "Access-Control-Allow-Origin": "*",
-      // Authorization: `Basic ${token}`,
-    },
-    method: "POST",
-    body: JSON.stringify({
-      `query getHomeOptionsQuery {
+    const GET_HOME_OPTIONS_QUERY = `
+query getHomeOptionsQuery {
   homePageSettings {
     home {
       homeSs1 {
@@ -98,12 +90,23 @@ const res = await fetch('https://apache.tnhs.xyz/graphql', {
       }
     }
   }
-}`,
-    }),
-  });
-  if (!res.ok) {
-    console.error(res);
-    return {};
-  }
+}
+`;
+    const res = await fetch("https://apache.tnhs.xyz/graphql", {
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+        // Authorization: `Basic ${token}`,
+      },
+      method: "POST",
+      body: JSON.stringify({
+        GET_HOME_OPTIONS_QUERY,
+      }),
+    });
+    if (!res.ok) {
+      console.error(res);
+      return {};
+    }
   </script>
 </Layout>
