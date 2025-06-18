@@ -1,7 +1,7 @@
 // @ts-check
 import { defineConfig, envField } from "astro/config";
 import { loadEnv } from "vite";
-import purgecss from "astro-purgecss";
+// import purgecss from "astro-purgecss";
 import netlify from "@astrojs/netlify";
 const { API_SECRET_TOKEN } = loadEnv(
   process.env.NODE_ENV || "",
@@ -11,7 +11,7 @@ const { API_SECRET_TOKEN } = loadEnv(
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [purgecss()],
+  // integrations: [purgecss()],
   experimental: {
     // svg: true,
   },
@@ -29,4 +29,3 @@ export default defineConfig({
   },
   adapter: netlify(),
 });
-
