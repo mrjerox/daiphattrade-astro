@@ -23,7 +23,6 @@ export default defineConfig({
       API_SECRET_TOKEN: envField.string({
         context: "server",
         access: "secret",
-        default: API_SECRET_TOKEN,
       }),
     },
     validateSecrets: true,
