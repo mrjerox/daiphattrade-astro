@@ -26,6 +26,7 @@ export default defineConfig({
         default: API_SECRET_TOKEN,
       }),
     },
+    validateSecrets: true,
   },
   adapter: netlify(),
 });
