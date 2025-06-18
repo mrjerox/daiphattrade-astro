@@ -11,7 +11,7 @@ import { API_SECRET_TOKEN } from "astro:env/server";
 
 const { homePageSettings } = await wpQuery({
   query: GET_HOME_OPTIONS_QUERY,
-  token: API_SECRET_TOKEN,
+  token: "ZHB0YWRtaW46MHNONiBhTHN1IFloZlEgZzdjTCBVUWdoIHU3bVE=",
 });
 const { homeSs1, homeSs2, homeSs3, homeSs4 } = homePageSettings?.home;
 ---
