@@ -28,5 +28,10 @@ export default defineConfig({
     },
     validateSecrets: true,
   },
+  vite: {
+    define: {
+      "process.env": JSON.stringify(process.env),
+    },
+  },
   adapter: netlify(),
 });
