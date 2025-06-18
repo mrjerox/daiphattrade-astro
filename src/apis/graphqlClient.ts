@@ -9,73 +9,6 @@ interface gqlParams {
 
 // Default
 export const wpQuery = async ({ query, variables = {}, token }: gqlParams) => {
-  const GET_HOME_OPTIONS_QUERY = `
-query getHomeOptionsQuery {
-  homePageSettings {
-    home {
-      homeSs1 {
-        description
-        title
-        url
-        image {
-          node {
-            filePath
-            slug
-            title
-            altText
-            caption
-          }
-        }
-      }
-      homeSs2 {
-        url
-        title
-        selectCategories {
-          nodes {
-            slug
-            name
-            uri
-            ... on ProductCategory {
-              image {
-                filePath
-                altText
-                slug
-                title
-              }
-            }
-          }
-        }
-      }
-      homeSs3 {
-        description
-        url
-        title
-        image {
-          node {
-            altText
-            filePath
-            title
-            slug
-          }
-        }
-      }
-      homeSs4 {
-        content
-        description
-        title
-        gallery {
-          nodes {
-            altText
-            filePath
-            title
-            slug
-          }
-        }
-      }
-    }
-  }
-}
-`;
   const res = await fetch(API_HOST + API_ENDPOINT, {
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -85,7 +18,8 @@ query getHomeOptionsQuery {
     },
     method: "POST",
     body: JSON.stringify({
-      GET_HOME_OPTIONS_QUERY,
+      query,
+      variables,
     }),
   });
   if (!res.ok) {
@@ -93,6 +27,5 @@ query getHomeOptionsQuery {
     return {};
   }
   const { data } = await res.json();
-  console.log("GraphQL Response:", data);
   return data;
 };
