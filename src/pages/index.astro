@@ -7,16 +7,19 @@ import { MEDIA_HOST } from "@configs/constant.conf";
 import { wpQuery } from "@apis/graphqlClient";
 import { GET_HOME_OPTIONS_QUERY } from "@apis/queries";
 import { Debug } from "astro:components";
+import { API_HOST, API_ENDPOINT } from "@configs/api.conf";
 import { API_SECRET_TOKEN } from "astro:env/server";
 
-const { homePageSettings } = await wpQuery({
-  query: GET_HOME_OPTIONS_QUERY,
-  token: "ZHB0YWRtaW46MHNONiBhTHN1IFloZlEgZzdjTCBVUWdoIHU3bVE=",
-});
+// const { homePageSettings } = await wpQuery({
+//   query: GET_HOME_OPTIONS_QUERY,
+//   token: "ZHB0YWRtaW46MHNONiBhTHN1IFloZlEgZzdjTCBVUWdoIHU3bVE=",
+// });
 // const { homeSs1, homeSs2, homeSs3, homeSs4 } = homePageSettings?.home;
 ---
 
-<Debug data={{ key: API_SECRET_TOKEN, data: homePageSettings }} />
+<Debug
+  data={{ key: API_SECRET_TOKEN, host: API_HOST, endpoint: API_ENDPOINT }}
+/>
 <Layout title="Home - Daiphattrade.com">
   <main>
     <h1>test</h1>
