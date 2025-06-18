@@ -9,14 +9,14 @@ import { GET_HOME_OPTIONS_QUERY } from "@apis/queries";
 import { Debug } from "astro:components";
 import { API_SECRET_TOKEN } from "astro:env/server";
 
-// const { homePageSettings } = await wpQuery({
-//   query: GET_HOME_OPTIONS_QUERY,
-//   token: "ZHB0YWRtaW46MHNONiBhTHN1IFloZlEgZzdjTCBVUWdoIHU3bVE=",
-// });
+const { homePageSettings } = await wpQuery({
+  query: GET_HOME_OPTIONS_QUERY,
+  token: "ZHB0YWRtaW46MHNONiBhTHN1IFloZlEgZzdjTCBVUWdoIHU3bVE=",
+});
 // const { homeSs1, homeSs2, homeSs3, homeSs4 } = homePageSettings?.home;
 ---
 
-<Debug data={API_SECRET_TOKEN} />
+<Debug data={{ key: API_SECRET_TOKEN, data: homePageSettings }} />
 <Layout title="Home - Daiphattrade.com">
   <main>
     <h1>test</h1>
