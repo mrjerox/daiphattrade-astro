@@ -27,5 +27,15 @@ export default defineConfig({
       }),
     },
   },
+  image: {
+    domains: ["astro.build"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**.apache.tnhs.xyz",
+        pathname: "/wp-content/uploads/**",
+      },
+    ],
+  },
   adapter: netlify(),
 });
