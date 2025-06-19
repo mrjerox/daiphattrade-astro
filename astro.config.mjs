@@ -11,7 +11,7 @@ const { API_SECRET_TOKEN } = loadEnv(
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [purgecss()],
+  // integrations: [purgecss()],
   experimental: {
     // svg: true,
   },
@@ -29,4 +29,3 @@ export default defineConfig({
   },
   adapter: netlify(),
 });
-
