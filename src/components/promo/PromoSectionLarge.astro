@@ -28,6 +28,13 @@ const styles = {
 ---
 
 <>
+  <img
+    data-src={pageHeaderBgImg}
+    fetchpriority="high"
+    alt="Banner"
+    class="lazy"
+    style="width: 0; height: 0; opacity: 0; line-height: 0; position: absolute; z-index: -1;"
+  />
   <section class="section">
     <div class="page-header py-5 py-md-0" style={styles.pageHeader}>
       <span class="mask bg-black opacity-6"></span>

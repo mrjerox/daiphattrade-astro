@@ -12,7 +12,12 @@
 // * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 "use strict";
+import LazyLoad from "https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.0.3/+esm";
 (function () {
+  var lazyLoadInstance = new LazyLoad({
+    // Your custom settings go here
+  });
+
   var isWindows = navigator.platform.indexOf("Win") > -1 ? true : false;
 
   if (isWindows) {

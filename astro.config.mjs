@@ -32,5 +32,15 @@ export default defineConfig({
       "process.env": JSON.stringify(process.env),
     },
   },
+  image: {
+    domains: ["astro.build"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**.apache.tnhs.xyz",
+        pathname: "/wp-content/uploads/**",
+      },
+    ],
+  },
   adapter: netlify(),
 });

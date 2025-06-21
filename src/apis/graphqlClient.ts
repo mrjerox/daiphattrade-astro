@@ -11,10 +11,11 @@ interface gqlParams {
 export const wpQuery = async ({ query, variables = {}, token }: gqlParams) => {
   const res = await fetch(API_HOST + API_ENDPOINT, {
     headers: {
-      "Content-Type": "application/json; charset=utf-8",
-      Accept: "application/json",
-      "Access-Control-Allow-Origin": "*",
-      Authorization: `Basic ${token}`,
+      'Content-Type': 'application/json; charset=utf-8',
+      'Accept': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      "Cache-Control": "public, max-age=1800",
+      'Authorization': `Basic ${token}`
     },
     method: "POST",
     body: JSON.stringify({
