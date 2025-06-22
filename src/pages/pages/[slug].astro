@@ -1,114 +1,98 @@
 ---
+export const prerender = true;
 import Layout from "@layouts/Layout.astro";
 import CardCategory from "@components/products/CardCategory.astro";
 import { wpQuery } from "@apis/graphqlClient";
 import {
   GET_PAGE_QUERY,
+  GET_PAGES_QUERY,
   GET_PRODUCT_BRANDS_QUERY,
   GET_PRODUCT_CATEGORIES_QUERY,
 } from "@apis/queries";
 import { API_SECRET_TOKEN } from "astro:env/server";
 import { PageIdType, MEDIA_HOST } from "@configs/constant.conf";
+import Categories from "@components/pages/Categories.astro";
 import { Debug } from "astro:components";
 
-const { slug } = Astro.params;
+// const { slug } = Astro.params;
 
-const { page } = await wpQuery({
-  query: GET_PAGE_QUERY,
-  token: API_SECRET_TOKEN,
-  variables: {
-    slug,
-    idType: PageIdType.URI,
-  },
-});
+export const getStaticPaths = async () => {
+  const { pages } = await wpQuery({
+    query: GET_PAGES_QUERY,
+    token: API_SECRET_TOKEN,
+    variables: {
+      where: {},
+    },
+  });
 
-const { productCategories } = await wpQuery({
-  query: GET_PRODUCT_CATEGORIES_QUERY,
-  token: API_SECRET_TOKEN,
-  variables: {
-    where: {},
-  },
-});
+  const pagesData = pages?.nodes || [];
+  // const pages = [
+  //   {
+  //     slug: "categories",
+  //     title: "Astro Store",
+  //     text: "Welcome to the Astro store!",
+  //   },
+  // ];
+  //
+  const { productCategories } = await wpQuery({
+    query: GET_PRODUCT_CATEGORIES_QUERY,
+    token: API_SECRET_TOKEN,
+    variables: {
+      where: {},
+    },
+  });
+
+  return pagesData.map((page: any) => {
+    return {
+      params: { slug: page?.slug },
+      props: {
+        title: page?.title,
+        content: page?.content,
+        featuredImage: page?.featuredImage?.node?.filePath
+          ? MEDIA_HOST + page?.featuredImage?.node?.filePath
+          : "",
+        pageId: page?.id,
+        uri: page?.uri,
+        slug: page?.slug,
+        date: page?.date,
+        status: page?.status,
+        template: page?.template?.templateName,
+        productCategories: productCategories?.nodes || [],
+      },
+    };
+  });
+};
+
+// const { productCategories } = await wpQuery({
+//   query: GET_PRODUCT_CATEGORIES_QUERY,
+//   token: API_SECRET_TOKEN,
+//   variables: {
+//     where: {},
+//   },
+// });
+
+const {
+  title,
+  content,
+  featuredImage,
+  pageId,
+  uri,
+  slug,
+  date,
+  status,
+  template,
+  productCategories,
+} = Astro.props;
 ---
 
-<!-- <Debug data={allProductBrands} /> -->
-<Layout title={page?.title}>
-  <main>
-    <section class="section1 py-5 mt-5">
-      <div class="container">
-        <div class="row" style="row-gap: 24px;">
-          <div class="d-block text-center mb-4">
-            <h3>{page?.title}</h3>
-            <Fragment set:html={page?.content} />
-          </div>
-          <div class="col-md-6">
-            {
-              productCategories?.nodes.map((category: any, index: any) => {
-                if (index === 0) {
-                  return (
-                    <CardCategory
-                      classList="h-100"
-                      cta=""
-                      collection=""
-                      thumb_src={
-                        category?.image?.filePath
-                          ? MEDIA_HOST + category?.image?.filePath
-                          : ""
-                      }
-                      title={category?.name}
-                      url={`/categories/${category?.slug}`}
-                    />
-                  );
-                }
-              })
-            }
-          </div>
-          <div class="col-md-6">
-            {
-              productCategories?.nodes.map((category: any, index: any) => {
-                if (index === 1 || index === 2) {
-                  return (
-                    <div class={index === 1 ? "mb-4" : ""}>
-                      <CardCategory
-                        classList="h-100"
-                        cta=""
-                        collection=""
-                        thumb_src={
-                          category?.image?.filePath
-                            ? MEDIA_HOST + category?.image?.filePath
-                            : ""
-                        }
-                        title={category?.name}
-                        url={`/categories/${category?.slug}`}
-                      />
-                    </div>
-                  );
-                }
-              })
-            }
-          </div>
-          {
-            productCategories?.nodes.map((category: any, index: any) => {
-              if (index >= 3) {
-                return (
-                  <div class="col-md-6 col-lg-3">
-                    <CardCategory
-                      thumb_src={
-                        category?.image?.filePath
-                          ? MEDIA_HOST + category?.image?.filePath
-                          : ""
-                      }
-                      title={category?.name}
-                      collection=""
-                      url={`/categories/${category?.slug}`}
-                    />
-                  </div>
-                );
-              }
-            })
-          }
-        </div>
-      </div>
-    </section>
-  </main>
+<Debug data={{ title, content, template }} />
+<Layout title={title || ""}>
+  {
+    template === "Categories" && (
+      <Categories
+        page={{ title, content }}
+        productCategories={productCategories}
+      />
+    )
+  }
 </Layout>

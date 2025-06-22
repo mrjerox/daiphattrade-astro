@@ -1,0 +1,89 @@
+---
+import CardCategory from "@components/products/CardCategory.astro";
+import { MEDIA_HOST } from "@configs/constant.conf";
+
+interface Props {
+  page: any;
+  productCategories: any[any];
+}
+const { page, productCategories }: Props = Astro.props;
+---
+
+<main>
+  <section class="section1 py-5 mt-5">
+    <div class="container">
+      <div class="row" style="row-gap: 24px;">
+        <div class="d-block text-center mb-4">
+          <h3>{page?.title}</h3>
+          <Fragment set:html={page?.content} />
+        </div>
+        <div class="col-md-6">
+          {
+            productCategories?.map((category: any, index: any) => {
+              if (index === 0) {
+                return (
+                  <CardCategory
+                    classList="h-100"
+                    cta=""
+                    collection=""
+                    thumb_src={
+                      category?.image?.filePath
+                        ? MEDIA_HOST + category?.image?.filePath
+                        : ""
+                    }
+                    title={category?.name}
+                    url={`/categories/${category?.slug}`}
+                  />
+                );
+              }
+            })
+          }
+        </div>
+        <div class="col-md-6">
+          {
+            productCategories?.map((category: any, index: any) => {
+              if (index === 1 || index === 2) {
+                return (
+                  <div class={index === 1 ? "mb-4" : ""}>
+                    <CardCategory
+                      classList="h-100"
+                      cta=""
+                      collection=""
+                      thumb_src={
+                        category?.image?.filePath
+                          ? MEDIA_HOST + category?.image?.filePath
+                          : ""
+                      }
+                      title={category?.name}
+                      url={`/categories/${category?.slug}`}
+                    />
+                  </div>
+                );
+              }
+            })
+          }
+        </div>
+        {
+          productCategories?.map((category: any, index: any) => {
+            if (index >= 3) {
+              return (
+                <div class="col-md-6 col-lg-3">
+                  <CardCategory
+                    thumb_src={
+                      category?.image?.filePath
+                        ? MEDIA_HOST + category?.image?.filePath
+                        : ""
+                    }
+                    title={category?.name}
+                    collection=""
+                    url={`/categories/${category?.slug}`}
+                  />
+                </div>
+              );
+            }
+          })
+        }
+      </div>
+    </div>
+  </section>
+</main>
