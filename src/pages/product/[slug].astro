@@ -1,24 +1,31 @@
 ---
+// export const prerender = true;
 import Layout from "@layouts/Layout.astro";
 import ProductOverviewGallery from "@components/products/ProductOverviewGallery.astro";
 import CardProduct from "@components/products/CardProduct.astro";
 import { wpQuery } from "@apis/graphqlClient";
-import { GET_PRODUCT_QUERY } from "@apis/queries";
+import { GET_ALL_PRODUCTS_QUERY } from "@apis/queries";
 import { Debug } from "astro:components";
-import { ProductIdTypeEnum } from "@configs/graphql";
 import { MEDIA_HOST } from "@configs/constant.conf";
 
-const { slug } = Astro.params;
+export const getStaticPaths = async () => {
+  const { products } = await wpQuery({
+    query: GET_ALL_PRODUCTS_QUERY,
+  });
 
-const { product } = await wpQuery({
-  query: GET_PRODUCT_QUERY,
-  variables: {
-    id: slug,
-    idType: ProductIdTypeEnum.Slug,
-    where: {},
-    first: 4,
-  },
-});
+  const promise = products?.nodes.map((product: any) => {
+    return {
+      params: { slug: product?.slug },
+      props: {
+        product,
+      },
+    };
+  });
+
+  return Promise.all(promise);
+};
+
+const { product } = Astro.props;
 ---
 
 <Layout title={product?.name || ""}>
@@ -47,7 +54,7 @@ const { product } = await wpQuery({
             product?.related?.nodes?.map((relatedProduct: any) => (
               <div class="col-md-6 col-lg-3">
                 <CardProduct
-                  href={`/products/${relatedProduct?.slug}`}
+                  href={`/product/${relatedProduct?.slug}`}
                   thumb_src={MEDIA_HOST + relatedProduct?.image?.filePath}
                   thumb_alt={relatedProduct?.image?.altText || ""}
                   title={relatedProduct?.name}

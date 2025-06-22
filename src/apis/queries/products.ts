@@ -8,6 +8,7 @@ query getProductCategoriesQuery($where: RootQueryToProductCategoryConnectionWher
       slug
       taxonomyName
       name
+      description
       image {
         altText
         filePath
@@ -60,6 +61,73 @@ query getProductOriginsQuery($where: RootQueryToProduct_originsConnectionWhereAr
 `;
 
 // Products
+export const GET_ALL_PRODUCTS_QUERY = `
+query GetAllProductsQuery($where: RootQueryToProductUnionConnectionWhereArgs = {}, $first: Int = 9999) {
+  products(first: $first, where: $where) {
+    nodes {
+      uri
+      title
+      id
+      slug
+... on SimpleProduct {
+      id
+      name
+      excerpt
+      price(format: RAW)
+      salePrice(format: RAW)
+      sku
+      slug
+      status
+      title
+      image {
+        filePath
+        title
+        uri
+        slug
+        altText
+      }
+      galleryImages {
+        nodes {
+          altText
+          filePath
+          title
+          uri
+          slug
+        }
+      }
+      content
+      related(first: 8) {
+        nodes {
+          ... on SimpleProduct {
+            id
+            name
+            excerpt
+            price(format: RAW)
+            salePrice(format: RAW)
+            sku
+            slug
+            title
+            image {
+              filePath
+              title
+              uri
+              slug
+              altText
+            }
+          }
+        }
+      }
+    }
+    productAcf {
+      productHowtouse
+      productOtherinfo
+      productBenefits
+    }
+    }
+  }
+}
+`;
+
 export const GET_PRODUCTS_BY_CATEGORY_QUERY = `
 query getProductsByCategoryQuery($category: String = "", $first: Int = 9, $field: ProductsOrderByEnum = DATE, $order: OrderEnum = ASC) {
   products(where: {category: $category, orderby: {field: $field, order: $order}}, first: $first) {

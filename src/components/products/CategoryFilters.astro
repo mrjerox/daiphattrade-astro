@@ -55,7 +55,7 @@ const { title, description, categories, brands, origins, products }: Props =
         {
           categories?.map((category) => (
             <li class="mb-2">
-              <a href={`/categories/${category?.slug}`}>{category?.name}</a>
+              <a href={`/category/${category?.slug}`}>{category?.name}</a>
             </li>
           ))
         }
@@ -170,12 +170,10 @@ const { title, description, categories, brands, origins, products }: Props =
                       : ""
                   }
                   thumb_alt={product?.image?.altText || ""}
-                  color=""
-                  colors={product.colors ?? []}
                   title={product?.title}
                   description={product?.excerpt}
                   price={product?.price}
-                  href={`/products/${product?.slug}`}
+                  href={`/product/${product?.slug}`}
                   position="center"
                 />
               </div>

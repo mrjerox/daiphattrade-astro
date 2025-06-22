@@ -1,0 +1,105 @@
+---
+// export const prerender = true;
+import Layout from "@layouts/Layout.astro";
+import CategoryFilters from "@components/products/CategoryFilters.astro";
+import { wpQuery } from "@apis/graphqlClient";
+import {
+  GET_PRODUCT_BRANDS_QUERY,
+  GET_PRODUCT_CATEGORIES_QUERY,
+  GET_PRODUCT_ORIGINS_QUERY,
+  GET_PRODUCTS_BY_CATEGORY_QUERY,
+} from "@apis/queries";
+import { API_SECRET_TOKEN } from "astro:env/server";
+import { Debug } from "astro:components";
+import { OrderEnum, ProductsOrderByEnum } from "@configs/graphql";
+
+export const getStaticPaths = async () => {
+  // Fetch all product categories
+  const { productCategories } = await wpQuery({
+    query: GET_PRODUCT_CATEGORIES_QUERY,
+    token: API_SECRET_TOKEN,
+    variables: {
+      where: {},
+    },
+  });
+
+  const { allProductBrands } = await wpQuery({
+    query: GET_PRODUCT_BRANDS_QUERY,
+    token: API_SECRET_TOKEN,
+    variables: {
+      where: {},
+    },
+  });
+
+  const { allProductOrigins } = await wpQuery({
+    query: GET_PRODUCT_ORIGINS_QUERY,
+    token: API_SECRET_TOKEN,
+    variables: {
+      where: {},
+    },
+  });
+
+  // Return data
+  const promise = productCategories?.nodes.map(async (category: any) => {
+    // Products in the current category
+    const { products } = await wpQuery({
+      query: GET_PRODUCTS_BY_CATEGORY_QUERY,
+      token: API_SECRET_TOKEN,
+      variables: {
+        category: category?.slug,
+        field: ProductsOrderByEnum.Date,
+        order: OrderEnum.Desc,
+        first: 6,
+      },
+    });
+    return {
+      params: { slug: category?.slug },
+      props: {
+        productCategory: {
+          id: category?.id,
+          name: category?.name,
+          description: category?.description,
+          slug: category?.slug,
+          uri: category?.uri,
+        },
+        products,
+        productCategories: productCategories || [],
+        allProductBrands: allProductBrands || [],
+        allProductOrigins: allProductOrigins || [],
+      },
+    };
+  });
+  return Promise.all(promise);
+};
+
+const {
+  productCategory,
+  products,
+  productCategories,
+  allProductBrands,
+  allProductOrigins,
+} = Astro.props;
+---
+
+<!-- <Debug data={products} /> -->
+<Layout title={productCategory?.name || ""}>
+  <main>
+    <section class="section1">
+      <div class="container">
+        <div class="mb-5 mt-8">
+          <CategoryFilters
+            title={productCategory?.name || ""}
+            description={productCategory?.description || ""}
+            categories={productCategories?.nodes || []}
+            brands={allProductBrands?.nodes || []}
+            origins={allProductOrigins?.nodes || []}
+            products={products?.nodes || []}
+          />
+        </div>
+      </div>
+    </section>
+  </main>
+  <script>
+    console.log("Product Category Slug:", "slug");
+  </script>
+</Layout>

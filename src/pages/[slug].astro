@@ -1,5 +1,5 @@
 ---
-export const prerender = true;
+// export const prerender = true;
 import Layout from "@layouts/Layout.astro";
 import CardCategory from "@components/products/CardCategory.astro";
 import { wpQuery } from "@apis/graphqlClient";
@@ -14,9 +14,8 @@ import { PageIdType, MEDIA_HOST } from "@configs/constant.conf";
 import Categories from "@components/pages/Categories.astro";
 import { Debug } from "astro:components";
 
-// const { slug } = Astro.params;
-
 export const getStaticPaths = async () => {
+  // Fetch all pages
   const { pages } = await wpQuery({
     query: GET_PAGES_QUERY,
     token: API_SECRET_TOKEN,
@@ -26,14 +25,8 @@ export const getStaticPaths = async () => {
   });
 
   const pagesData = pages?.nodes || [];
-  // const pages = [
-  //   {
-  //     slug: "categories",
-  //     title: "Astro Store",
-  //     text: "Welcome to the Astro store!",
-  //   },
-  // ];
-  //
+
+  // Fetch product categories
   const { productCategories } = await wpQuery({
     query: GET_PRODUCT_CATEGORIES_QUERY,
     token: API_SECRET_TOKEN,
@@ -42,6 +35,7 @@ export const getStaticPaths = async () => {
     },
   });
 
+  // Map through pages to create static paths
   return pagesData.map((page: any) => {
     return {
       params: { slug: page?.slug },
@@ -63,14 +57,6 @@ export const getStaticPaths = async () => {
   });
 };
 
-// const { productCategories } = await wpQuery({
-//   query: GET_PRODUCT_CATEGORIES_QUERY,
-//   token: API_SECRET_TOKEN,
-//   variables: {
-//     where: {},
-//   },
-// });
-
 const {
   title,
   content,
@@ -85,7 +71,7 @@ const {
 } = Astro.props;
 ---
 
-<Debug data={{ title, content, template }} />
+<!-- <Debug data={{ title, content, template }} /> -->
 <Layout title={title || ""}>
   {
     template === "Categories" && (

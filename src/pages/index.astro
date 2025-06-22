@@ -1,5 +1,5 @@
 ---
-export const prerender = true;
+// export const prerender = true;
 import Layout from "@layouts/Layout.astro";
 import CardCategory from "@components/products/CardCategory.astro";
 import ProductFeature from "@components/products/ProductFeature.astro";
@@ -51,7 +51,7 @@ const { homeSs1, homeSs2, homeSs3, homeSs4 } = homePageSettings?.home;
                     }
                     collection=""
                     title={category?.name}
-                    url={`/categories/${category?.slug}`}
+                    url={`/category/${category?.slug}`}
                   />
                 </div>
               );
