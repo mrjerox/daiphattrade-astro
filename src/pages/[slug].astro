@@ -12,7 +12,9 @@ import {
 import { API_SECRET_TOKEN } from "astro:env/server";
 import { PageIdType, MEDIA_HOST } from "@configs/constant.conf";
 import Categories from "@components/pages/Categories.astro";
+import About from "@components/pages/About.astro";
 import { Debug } from "astro:components";
+import Cart from "@components/pages/Cart.astro";
 
 export const getStaticPaths = async () => {
   // Fetch all pages
@@ -71,14 +73,25 @@ const {
 } = Astro.props;
 ---
 
-<!-- <Debug data={{ title, content, template }} /> -->
 <Layout title={title || ""}>
   {
-    template === "Categories" && (
-      <Categories
-        page={{ title, content }}
-        productCategories={productCategories}
-      />
-    )
+    () => {
+      // Case page template
+      switch (template) {
+        case "Categories":
+          return (
+            <Categories
+              page={{ title, content }}
+              productCategories={productCategories || []}
+            />
+          );
+        case "Cart":
+          return <Cart page={{ title, content }} />;
+        case "About":
+          return <About page={{ title, content }} />;
+        default:
+          return <h1>??</h1>;
+      }
+    }
   }
 </Layout>

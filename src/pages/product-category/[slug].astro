@@ -1,5 +1,4 @@
 ---
-// export const prerender = true;
 import Layout from "@layouts/Layout.astro";
 import CategoryFilters from "@components/products/CategoryFilters.astro";
 import { wpQuery } from "@apis/graphqlClient";
@@ -10,7 +9,6 @@ import {
   GET_PRODUCTS_BY_CATEGORY_QUERY,
 } from "@apis/queries";
 import { API_SECRET_TOKEN } from "astro:env/server";
-import { Debug } from "astro:components";
 import { OrderEnum, ProductsOrderByEnum } from "@configs/graphql";
 
 export const getStaticPaths = async () => {
@@ -49,7 +47,7 @@ export const getStaticPaths = async () => {
         category: category?.slug,
         field: ProductsOrderByEnum.Date,
         order: OrderEnum.Desc,
-        first: 6,
+        first: 9,
       },
     });
     return {
@@ -99,7 +97,4 @@ const {
       </div>
     </section>
   </main>
-  <script>
-    console.log("Product Category Slug:", "slug");
-  </script>
 </Layout>

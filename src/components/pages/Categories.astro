@@ -32,7 +32,7 @@ const { page, productCategories }: Props = Astro.props;
                         : ""
                     }
                     title={category?.name}
-                    url={`/category/${category?.slug}`}
+                    url={category?.uri}
                   />
                 );
               }
@@ -55,7 +55,7 @@ const { page, productCategories }: Props = Astro.props;
                           : ""
                       }
                       title={category?.name}
-                      url={`/categories/${category?.slug}`}
+                      url={category?.uri}
                     />
                   </div>
                 );
@@ -76,7 +76,7 @@ const { page, productCategories }: Props = Astro.props;
                     }
                     title={category?.name}
                     collection=""
-                    url={`/categories/${category?.slug}`}
+                    url={category?.uri}
                   />
                 </div>
               );

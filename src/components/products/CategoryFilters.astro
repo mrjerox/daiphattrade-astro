@@ -1,6 +1,5 @@
 ---
 import { MEDIA_HOST } from "@configs/constant.conf";
-import data from "../../../public/data.json";
 import CardProduct from "./CardProduct.astro";
 
 interface Props {
@@ -55,7 +54,7 @@ const { title, description, categories, brands, origins, products }: Props =
         {
           categories?.map((category) => (
             <li class="mb-2">
-              <a href={`/category/${category?.slug}`}>{category?.name}</a>
+              <a href={category?.uri}>{category?.name}</a>
             </li>
           ))
         }

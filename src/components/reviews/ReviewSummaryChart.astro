@@ -4,25 +4,9 @@ import ReviewRating from "./ReviewRating.astro";
 import ReviewProgress from "./ReviewProgress.astro";
 
 interface Props {
-  reviews: {
-    avatar: string;
-    name: string;
-    date: string;
-    rating: number;
-    comment: string;
-    productID: number;
-  }[];
+  reviews: any[];
 }
 const { reviews }: Props = Astro.props;
-let CommentsList: any[] = [];
-let rating = 0;
-
-reviews.map((review) => {
-  rating += review.rating;
-  CommentsList.push(<ReviewComment review={review} />);
-});
-
-rating = Math.trunc(rating / reviews.length);
 ---
 
 <>
@@ -39,7 +23,7 @@ rating = Math.trunc(rating / reviews.length);
         <h4 class="mb-3">Client Reviews</h4>
         <div class="d-flex align-items-center">
           <h6 class="mb-0 me-2">4.7</h6>
-          <ReviewRating rating={rating} />
+          <ReviewRating rating={4.7} />
           <p class="mb-0 ms-2">Based on <b>{reviews.length}</b> reviews</p>
         </div>
         <div class="mt-4 mb-5">
@@ -56,7 +40,7 @@ rating = Math.trunc(rating / reviews.length);
     <div class="col-12 col-lg-7 max-height-500 overflow-scroll rounded-3 pt-4">
       <div class="card card-plain">
         <div class="card-body">
-          {CommentsList}
+          {reviews.map((review) => <ReviewComment review={review} />)}
         </div>
       </div>
     </div>

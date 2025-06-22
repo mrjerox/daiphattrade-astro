@@ -4,7 +4,7 @@ import { BASE_URL } from "../../configs/constant.conf";
 interface Props {
   title: string;
   full_description: string;
-  data: Map<string, string>;
+  data: any;
 }
 const { title, full_description, data }: Props = Astro.props;
 ---
@@ -12,12 +12,8 @@ const { title, full_description, data }: Props = Astro.props;
 <div class="card card-product card-plain">
   <div class="row mt-5">
     <div class="col-12">
-      {title.length != 0 && <h2 class="mb-3">{title}</h2>}
-      {
-        full_description.length != 0 && (
-          <p class="mb-5 w-lg-70">{full_description}</p>
-        )
-      }
+      <h2 class="mb-3">{title}</h2>
+      <Fragment set:html={full_description} />
 
       <div class="nav-wrapper position-relative end-0 pb-4 border-bottom">
         <ul class="nav nav-pills nav-fill p-1 w-lg-50" role="tablist">
@@ -98,28 +94,28 @@ const { title, full_description, data }: Props = Astro.props;
                 <div class="col-6 mb-4">
                   <img
                     class="w-100 rounded-3"
-                    src={`${BASE_URL}/images/product10.jpg`}
+                    src={`${BASE_URL}images/product10.jpg`}
                     alt=""
                   />
                 </div>
                 <div class="col-6 mb-4">
                   <img
                     class="w-100 rounded-3"
-                    src={`${BASE_URL}/images/product11.jpg`}
+                    src={`${BASE_URL}images/product11.jpg`}
                     alt=""
                   />
                 </div>
                 <div class="col-6 mb-4">
                   <img
                     class="w-100 rounded-3"
-                    src={`${BASE_URL}/images/product12.jpg`}
+                    src={`${BASE_URL}images/product12.jpg`}
                     alt=""
                   />
                 </div>
                 <div class="col-6">
                   <img
                     class="w-100 rounded-3"
-                    src={`${BASE_URL}/images/product13.jpg`}
+                    src={`${BASE_URL}images/product13.jpg`}
                     alt=""
                   />
                 </div>

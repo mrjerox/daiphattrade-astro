@@ -6,19 +6,8 @@ import OrderSummary from "../cart/OrderSummary.astro";
 import CheckoutSingleItem from "../checkout/CheckoutSingleItem.astro";
 
 interface Props {
-  products: {
-    thumb_src: string;
-    thumb_alt: string;
-    color: string;
-    title: string;
-    price: number;
-    size: string;
-    stock: string;
-    subtotal: number;
-    shipping: number;
-    tax: number;
-  }[];
-  textColor: string;
+  products: any[];
+  textColor?: string;
 }
 
 const { products, textColor }: Props = Astro.props;
@@ -77,7 +66,7 @@ products.map((product) => (subtotalCheckout += product.price));
           ${subtotalCheckout.toLocaleString()}
         </h3>
         {
-          products.map((product, i) => (
+          products.map((product) => (
             <CheckoutSingleItem
               thumb_src={product.thumb_src}
               thumb_alt={product.thumb_alt}

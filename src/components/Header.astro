@@ -1,10 +1,21 @@
+---
+import { wpQuery } from "@apis/graphqlClient";
+import { GET_MENU_QUERY } from "@apis/queries";
+import { flatListToHierarchical } from "@utils/index";
+import { Debug } from "astro:components";
+
+const { menuItems } = await wpQuery({
+  query: GET_MENU_QUERY,
+});
+
+const hiderachicalMenu = flatListToHierarchical(menuItems?.nodes);
+---
+
 <nav
   class="navbar navbar-expand-lg blur border-radius-sm top-0 z-index-3 shadow position-sticky py-3 start-0 end-0"
 >
   <div class="container px-1">
-    <a class="navbar-brand font-weight-bolder ms-lg-0" href="/"
-      >Daiphattrade</a
-    >
+    <a class="navbar-brand font-weight-bolder ms-lg-0" href="/">Daiphattrade</a>
     <button
       class="navbar-toggler shadow-none ms-2"
       type="button"
@@ -22,49 +33,45 @@
     </button>
     <div class="collapse navbar-collapse" id="navigation">
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a
-            class="nav-link text-dark font-weight-bold d-flex align-items-center me-2"
-            aria-current="page"
-            href="/"
-          >
-            About us
-          </a>
-        </li>
-        <li class="nav-item dropdown">
-          <a
-            class="nav-link text-dark dropdown-toggle font-weight-bold d-flex align-items-center me-2"
-            aria-current="page"
-            id="pagesExample"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            Shop now <i class="bi bi-chevron-down ms-1"></i>
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="pagesExample">
-            <li>
-              <a class="dropdown-item" href="/products">All Products</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="/categories/silk-dresses"
-                >Silk Dresses</a
-              >
-            </li>
-            <li>
-              <a class="dropdown-item" href="/categories/suits">Suits</a>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link text-dark font-weight-bold d-flex align-items-center me-2"
-            aria-current="page"
-            href="/posts"
-            data-astro-prefetch
-          >
-            Posts
-          </a>
-        </li>
+        {
+          hiderachicalMenu.map((item: any) => {
+            if (item?.children?.length > 0) {
+              return (
+                <li class="nav-item dropdown">
+                  <a
+                    class="nav-link text-dark dropdown-toggle font-weight-bold d-flex align-items-center me-2"
+                    aria-current="page"
+                    id={item?.id}
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    {item?.label} <i class="bi bi-chevron-down ms-1" />
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby={item?.id}>
+                    {item?.children.map((child: any) => (
+                      <li>
+                        <a class="dropdown-item" href={child?.url}>
+                          {child?.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              );
+            }
+            return (
+              <li class="nav-item">
+                <a
+                  class="nav-link text-dark font-weight-bold d-flex align-items-center me-2"
+                  aria-current="page"
+                  href={item?.url}
+                >
+                  {item?.label}
+                </a>
+              </li>
+            );
+          })
+        }
       </ul>
     </div>
   </div>
