@@ -1,11 +1,11 @@
 ---
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
-import "../assets/scss/astro-ecommerce.sass";
+import Header from "@components/Header.astro";
+import ComplexFooter from "@components/ComplexFooter.astro";
+import "@assets/scss/astro-ecommerce.sass";
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={Astro.props.lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -30,7 +30,7 @@ import "../assets/scss/astro-ecommerce.sass";
   <body>
     <Header />
     <slot />
-    <Footer />
+    <ComplexFooter />
   </body>
 </html>
 
@@ -61,7 +61,6 @@ import "../assets/scss/astro-ecommerce.sass";
   }
 </style>
 <script>
-  // Import only what you need
   import "bootstrap/js/dist/alert";
   import "bootstrap/js/dist/button";
   import "bootstrap/js/dist/carousel";
@@ -74,5 +73,5 @@ import "../assets/scss/astro-ecommerce.sass";
   import "bootstrap/js/dist/tab";
   import "bootstrap/js/dist/toast";
   import "bootstrap/js/dist/tooltip";
-  import "../assets/scripts/astro-ecommerce.js";
+  import "@assets/scripts/astro-ecommerce.js";
 </script>

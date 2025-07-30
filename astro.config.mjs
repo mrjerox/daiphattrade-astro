@@ -44,4 +44,11 @@ export default defineConfig({
     ],
   },
   adapter: netlify(),
+  i18n: {
+    locales: ["en", "vi"],
+    defaultLocale: "en",
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
 });

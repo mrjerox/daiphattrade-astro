@@ -1,28 +1,99 @@
 ---
-import data from "../../public/data.json";
 import StoreDoubleColumn from "./store/StoreDoubleColumn.astro";
+import FacebookIcon from "@public/facebook-logo.svg";
+import InstagramIcon from "@public/instagram-logo.svg";
+import { wpQuery } from "@apis/graphqlClient";
+import { GET_GENERAL_OPTIONS_QUERY, GET_MENU_QUERY } from "@apis/queries";
+import { flatListToHierarchical } from "@utils/index";
+
+// Get locale
+const locale = Astro.currentLocale || "en";
+
+// Fetch menu
+const footerMenuShop = await wpQuery({
+  query: GET_MENU_QUERY,
+  variables: {
+    where: {
+      language: locale.toUpperCase(),
+      location: "FOOTER_MENU_SHOP",
+    },
+  },
+});
+const footerMenuQuick = await wpQuery({
+  query: GET_MENU_QUERY,
+  variables: {
+    where: {
+      language: locale.toUpperCase(),
+      location: "FOOTER_MENU_QUICK",
+    },
+  },
+});
+
+const hiderachicalMenuShop = flatListToHierarchical(
+  footerMenuShop?.menuItems?.nodes,
+);
+const hiderachicalMenuQuick = flatListToHierarchical(
+  footerMenuQuick?.menuItems?.nodes,
+);
+
+// Fetch data
+const { themeDptGeneralSettings } = await wpQuery({
+  query: GET_GENERAL_OPTIONS_QUERY,
+  variables: { language: locale.toUpperCase() },
+});
+const footerData = themeDptGeneralSettings?.themeGeneralSettings || {};
 ---
 
-<footer>
-  <div class="row">
-    <div class="col-12 col-md-4">
-      <h5 class="mt-5">Astro Ecommerce</h5>
-      <p class="text-body text-sm pe-5">
-        The time is now for it to be okay to be great. People in this world shun
-        people for being great. For being a bright color. For standing out.
-      </p>
-    </div>
-    <div class="col-12 col-md-8">
-      <StoreDoubleColumn title={data.products[1].title} />
-    </div>
-    <div class="col-12 mt-5 mb-lg-0 mb-4">
-      <div class="copyright text-center text-sm text-body">
-        Copyright ©
-        {new Date().getFullYear()}
-        &nbsp;Astro Ecommerce by &nbsp;
-        <a href="https://www.creative-tim.com" class="text-dark" target="_blank"
-          >Creative Tim</a
-        >.
+<footer class="pb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-4">
+        <h5 class="">Daiphattrade</h5>
+        <p class="text-body text-sm pe-5">
+          {footerData?.general?.footerDescription || ""}
+        </p>
+        <div class="socials d-flex align-items-center">
+          <a
+            href={footerData?.general?.facebook || "#"}
+            class="d-inline-block"
+            target="_blank"
+            style="line-height: 0;"
+          >
+            <FacebookIcon
+              class="text-dark me-3"
+              style="width: 24px; height: 24px;"
+            />
+          </a>
+          <a
+            href={footerData?.general?.instagram || "#"}
+            class="d-inline-block"
+            target="_blank"
+            style="line-height: 0;"
+          >
+            <InstagramIcon
+              class="text-dark me-3"
+              style="width: 24px; height: 24px;"
+            />
+          </a>
+        </div>
+      </div>
+      <div class="col-12 col-md-8">
+        <StoreDoubleColumn
+          quickMenu={hiderachicalMenuQuick}
+          shopMenu={hiderachicalMenuShop}
+        />
+      </div>
+      <div class="col-12 mt-5 mb-lg-0 mb-4">
+        <div class="copyright text-center text-sm text-body">
+          Copyright ©
+          {new Date().getFullYear()}
+          &nbsp;Astro Ecommerce by &nbsp;
+          <a
+            href="https://www.creative-tim.com"
+            class="text-dark"
+            target="_blank">Creative Tim</a
+          >.
+        </div>
       </div>
     </div>
   </div>

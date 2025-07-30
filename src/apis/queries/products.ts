@@ -62,7 +62,7 @@ query getProductOriginsQuery($where: RootQueryToProduct_originsConnectionWhereAr
 
 // Products
 export const GET_ALL_PRODUCTS_QUERY = `
-query GetAllProductsQuery($where: RootQueryToProductUnionConnectionWhereArgs = {}, $first: Int = 9999) {
+query GetAllProductsQuery($where: RootQueryToProductUnionConnectionWhereArgs = {}, $first: Int = 9) {
   products(first: $first, where: $where) {
     nodes {
       uri

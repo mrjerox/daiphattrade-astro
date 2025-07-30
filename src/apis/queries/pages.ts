@@ -30,3 +30,69 @@ query getPageQuery($slug: ID!, $idType: PageIdType!) {
   }
 }
 `;
+
+export const GET_PAGE_ABOUT_QUERY = `
+query NewQuery($id: ID = "about-us", $idType: PageIdType = URI) {
+  page(id: $id, idType: $idType) {
+    aboutUs {
+      aboutSs1 {
+        infomation {
+          content
+          fieldGroupName
+          titlle
+          image {
+            node {
+              altText
+              filePath
+              slug
+              title
+              uri
+            }
+          }
+        }
+      }
+      aboutSs2f {
+        title
+        description
+        list {
+          title
+          svg
+          content
+        }
+      }
+      aboutSs3 {
+        title
+        shortDescription
+        reviews {
+          star
+          name
+          date
+          content
+          avatar {
+            node {
+              altText
+              filePath
+              title
+              slug
+            }
+          }
+        }
+      }
+      aboutSs4 {
+        description
+        labelButton
+        title
+        url
+        background {
+          node {
+            altText
+            filePath
+            title
+            slug
+          }
+        }
+      }
+    }
+  }
+}
+`;

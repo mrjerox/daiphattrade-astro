@@ -1,11 +1,10 @@
 ---
 interface Props {
-  images: {
-    filePath: string;
-    altText: string;
-  }[];
+  images: any[];
 }
-import { MEDIA_HOST } from "../../configs/constant.conf";
+import { MEDIA_HOST } from "@configs/constant.conf";
+import { Image } from "astro:assets";
+
 const { images }: Props = Astro.props;
 const images2 = images.filter((_, index) => index !== 0);
 ---
@@ -16,10 +15,13 @@ const images2 = images.filter((_, index) => index !== 0);
       if (index === 0) {
         return (
           <div class="d-block d-md-flex">
-            <img
+            <Image
               class="w-100 max-height-200 rounded-3 mb-4 mb-md-0"
               src={MEDIA_HOST + image.filePath}
               alt={image.altText}
+              width={300}
+              height={300}
+              loading="lazy"
             />
           </div>
         );
@@ -31,10 +33,13 @@ const images2 = images.filter((_, index) => index !== 0);
     {
       images2.map((image, index) => (
         <div class="col-6">
-          <img
+          <Image
             class="w-100 max-height-200 rounded-3"
             src={MEDIA_HOST + image.filePath}
             alt={image.altText}
+            width={300}
+            height={300}
+            loading="lazy"
           />
         </div>
       ))

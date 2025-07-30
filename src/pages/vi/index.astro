@@ -5,33 +5,18 @@ import ProductFeature from "@components/products/ProductFeature.astro";
 import PromoSectionLarge from "@components/promo/PromoSectionLarge.astro";
 import { MEDIA_HOST } from "@configs/constant.conf";
 import { wpQuery } from "@apis/graphqlClient";
-import {
-  GET_GENERAL_OPTIONS_QUERY,
-  GET_HOME_OPTIONS_QUERY,
-} from "@apis/queries";
-import { Debug } from "astro:components";
+import { GET_HOME_OPTIONS_QUERY } from "@apis/queries";
 import { API_SECRET_TOKEN } from "astro:env/server";
 
-// Get locale
-const locale = Astro.currentLocale || "en";
-
-// Fetch home settings
 const { homeSettings } = await wpQuery({
   query: GET_HOME_OPTIONS_QUERY,
-  variables: { language: locale.toUpperCase() },
+  variables: { language: "VI" },
   token: API_SECRET_TOKEN,
 });
 const { homeSs1, homeSs2, homeSs3, homeSs4 } = homeSettings?.home;
-
-const { themeDptGeneralSettings } = await wpQuery({
-  query: GET_GENERAL_OPTIONS_QUERY,
-  variables: { language: locale.toUpperCase() },
-});
-const generalSettings = themeDptGeneralSettings?.themeGeneralSettings || {};
 ---
 
-<!-- <Debug data={test} /> -->
-<Layout title="Home - Daiphattrade.com">
+<Layout title="Trang chủ - Daiphattrade.com">
   <main>
     <PromoSectionLarge
       title={homeSs1?.title || ""}
@@ -91,30 +76,22 @@ const generalSettings = themeDptGeneralSettings?.themeGeneralSettings || {};
         </div>
         <div
           class="page-header mt-5 mb-10 rounded-top"
-          style={generalSettings?.formRegister?.background
-            ? `background-image: url(${MEDIA_HOST + generalSettings.formRegister.background?.node.filePath}); min-height: 50vh;`
-            : ""}
+          style="background-image: url('https://images.unsplash.com/photo-1519642918688-7e43b19245d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2676&q=80');min-height: 50vh;"
         >
           <div class="faded opacity-10"></div>
           <div class="z-index-2">
             <div class="row justify-content-center">
               <div class="col-sm-9 text-center mx-auto pt-6">
-                <h1 class="mb-4">
-                  {
-                    generalSettings?.formRegister?.title ||
-                      "Register for newsletter"
-                  }
-                </h1>
+                <h1 class="mb-4">Register for newsletter</h1>
                 <p class="lead mb-sm-5 px-md-8">
-                  {
-                    generalSettings?.formRegister?.description ||
-                      "Subscribe to our newsletter to get the latest updates and offers."
-                  }
+                  Stay in the loop with our newsletter featuring the latest
+                  updates, exclusive content, and special offers delivered
+                  straight to your inbox.
                 </p>
                 <button
                   class="btn btn-dark btn-lg d-flex align-items-center mx-auto"
                 >
-                  {generalSettings?.formRegister?.buttonLabel || "Register Now"}
+                  Register
                 </button>
               </div>
             </div>

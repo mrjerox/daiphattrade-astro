@@ -12,3 +12,13 @@
   -webkit-line-clamp: 3;
   overflow: hidden;
 }
+
+.ft-nav {
+  display: flex;
+  flex-wrap: wrap;
+
+  .nav-item {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}

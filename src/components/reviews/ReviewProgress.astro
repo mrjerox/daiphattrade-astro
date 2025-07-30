@@ -1,19 +1,13 @@
 ---
 interface Props {
-  reviews: {
-    avatar: string;
-    name: string;
-    date: string;
-    rating: number;
-    comment: string;
-  }[];
+  reviews: any;
 }
 const { reviews }: Props = Astro.props;
 let ratings = [0, 0, 0, 0, 0, 0];
 let ratingsPercentage = [0, 0, 0, 0, 0, 0];
 
-reviews.map((review) => {
-  ratings[review.rating]++;
+reviews.map((review: any) => {
+  ratings[review.star]++;
 });
 
 for (let i = 1; i < 6; i++) {

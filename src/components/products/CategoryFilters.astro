@@ -9,9 +9,17 @@ interface Props {
   brands?: any[];
   origins?: any[];
   products?: any[];
+  language?: string;
 }
-const { title, description, categories, brands, origins, products }: Props =
-  Astro.props;
+const {
+  title,
+  description,
+  categories,
+  brands,
+  origins,
+  products,
+  language,
+}: Props = Astro.props;
 ---
 
 <div class="card card-product card-plain">
@@ -172,7 +180,11 @@ const { title, description, categories, brands, origins, products }: Props =
                   title={product?.title}
                   description={product?.excerpt}
                   price={product?.price}
-                  href={`/product/${product?.slug}`}
+                  href={
+                    language
+                      ? `/${language}/product/${product?.slug}`
+                      : `/product/${product?.slug}`
+                  }
                   position="center"
                 />
               </div>

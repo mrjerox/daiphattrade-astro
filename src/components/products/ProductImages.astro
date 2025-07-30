@@ -1,18 +1,23 @@
 ---
+import { Image } from "astro:assets";
+import { MEDIA_HOST } from "@configs/constant.conf";
+
 interface Props {
   primaryImage?: any;
   images: any[];
 }
 const { images, primaryImage }: Props = Astro.props;
-import { MEDIA_HOST } from "@configs/constant.conf";
 ---
 
 <div class="col-12 col-lg-6">
-  <img
+  <Image
     class="w-90 rounded-2"
     src={primaryImage?.filePath ? MEDIA_HOST + primaryImage.filePath : ""}
-    alt={primaryImage?.alt}
+    alt={primaryImage?.alt ?? ""}
     id="primaryImage"
+    width={572}
+    height={572}
+    loading="lazy"
   />
   <div class="d-flex mt-4">
     {

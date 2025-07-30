@@ -4,7 +4,6 @@ import Layout from "@layouts/Layout.astro";
 import CardCategory from "@components/products/CardCategory.astro";
 import { wpQuery } from "@apis/graphqlClient";
 import {
-  GET_PAGE_ABOUT_QUERY,
   GET_PAGE_QUERY,
   GET_PAGES_QUERY,
   GET_PRODUCT_BRANDS_QUERY,
@@ -23,7 +22,7 @@ export const getStaticPaths = async () => {
     query: GET_PAGES_QUERY,
     token: API_SECRET_TOKEN,
     variables: {
-      where: { language: "EN" },
+      where: { language: "VI" },
     },
   });
   const pagesData = pages?.nodes || [];
@@ -34,7 +33,7 @@ export const getStaticPaths = async () => {
     token: API_SECRET_TOKEN,
     variables: {
       where: {
-        language: "EN",
+        language: "VI",
       },
     },
   });
@@ -77,7 +76,7 @@ const {
 
 <Layout title={title || ""}>
   {
-    async () => {
+    () => {
       // Case page template
       switch (template) {
         case "Categories":
@@ -90,12 +89,7 @@ const {
         case "Cart":
           return <Cart page={{ title, content }} />;
         case "About":
-          const { page } = await wpQuery({
-            query: GET_PAGE_ABOUT_QUERY,
-            variables: { id: pageId, language: "EN" },
-            token: API_SECRET_TOKEN,
-          });
-          return <About page={{ title, content }} data={page?.aboutUs} />;
+          return <About page={{ title, content }} />;
         default:
           return <h1>??</h1>;
       }

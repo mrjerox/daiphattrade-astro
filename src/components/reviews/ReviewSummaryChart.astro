@@ -4,43 +4,66 @@ import ReviewRating from "./ReviewRating.astro";
 import ReviewProgress from "./ReviewProgress.astro";
 
 interface Props {
-  reviews: any[];
+  data: any;
 }
-const { reviews }: Props = Astro.props;
+const locale = Astro.currentLocale || "en";
+const { data }: Props = Astro.props;
+const totalStar = data?.reviews.reduce((acc: number, review: any) => {
+  return acc + review.star;
+}, 0);
 ---
 
 <>
   <div class="mx-auto text-center w-md-60 mb-5">
-    <h3>Our Customer’s Opinion</h3>
-    <p>
-      Society has put up so many boundaries, so many limitations on what’s right
-      and wrong that it’s almost impossible to get a pure thought out.
-    </p>
+    <h3>{data?.title || ""}</h3>
+    <p>{data?.shortDescription}</p>
   </div>
   <div class="row">
     <div class="col-12 col-lg-5">
       <div class="p-4 mb-4">
-        <h4 class="mb-3">Client Reviews</h4>
+        <h4 class="mb-3">
+          {locale === "en" ? "Client Reviews" : "Khách hàng nói về chúng tôi"}
+        </h4>
         <div class="d-flex align-items-center">
-          <h6 class="mb-0 me-2">4.7</h6>
-          <ReviewRating rating={4.7} />
-          <p class="mb-0 ms-2">Based on <b>{reviews.length}</b> reviews</p>
+          <h6 class="mb-0 me-2">
+            {(totalStar / data?.reviews.length).toFixed(1)}
+          </h6>
+          <ReviewRating
+            rating={Number((totalStar / data?.reviews.length).toFixed(1))}
+          />
+          <p class="mb-0 ms-2">
+            {locale === "en" ? "Based on " : "Dựa trên "}
+            <b>{data?.reviews.length}</b>
+            {locale === "en" ? " reviews" : " đánh giá"}
+          </p>
         </div>
         <div class="mt-4 mb-5">
-          <ReviewProgress reviews={reviews} />
+          <ReviewProgress reviews={data?.reviews} />
         </div>
-        <h5>We value your opinion</h5>
+        <h5>
+          {
+            locale === "en"
+              ? "We value your opinion"
+              : "Nhận xét của quý khách về chúng tôi"
+          }
+        </h5>
         <p class="mb-5">
           The time is now for it to be okay to be great. People in this world
           shun people for being great.
         </p>
-        <button class="btn btn-dark w-100 mb-0">Write a review</button>
+        <button class="btn btn-dark w-100 mb-0"
+          >{locale === "en" ? "Write a review" : "Gửi đánh giá"}</button
+        >
       </div>
     </div>
     <div class="col-12 col-lg-7 max-height-500 overflow-scroll rounded-3 pt-4">
       <div class="card card-plain">
         <div class="card-body">
-          {reviews.map((review) => <ReviewComment review={review} />)}
+          {
+            data?.reviews.map((review: any) => (
+              <ReviewComment review={review} />
+            ))
+          }
         </div>
       </div>
     </div>

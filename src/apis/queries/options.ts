@@ -1,19 +1,43 @@
 export const GET_GENERAL_OPTIONS_QUERY = `
-  query getGeneralOptionsQuery {
-    themeGeneralSettingsPage {
-      themesGeneralSettings {
-        generalLogo {
+query getGeneralOptionsQuery($language: LanguageCodeFilterEnum = EN) {
+  themeDptGeneralSettings(language: $language) {
+    themeGeneralSettings {
+      formRegister {
+        buttonLabel
+        description
+        title
+        background {
           node {
+            altText
             filePath
+            uri
+            title
+            slug
+          }
+        }
+      }
+      general {
+        facebook
+        footerDescription
+        instagram
+        logo {
+          node {
+            altText
+            filePath
+            title
+            uri
+            slug
           }
         }
       }
     }
-  }`;
+  }
+}
+`;
 
 export const GET_HOME_OPTIONS_QUERY = `
-query getHomeOptionsQuery {
-  homePageSettings {
+query getHomeOptionsQuery($language: LanguageCodeFilterEnum = EN) {
+  homeSettings(language: $language) {
     home {
       homeSs1 {
         description

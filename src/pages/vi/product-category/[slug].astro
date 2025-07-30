@@ -18,7 +18,7 @@ export const getStaticPaths = async () => {
     token: API_SECRET_TOKEN,
     variables: {
       where: {
-        language: "EN",
+        language: "VI",
       },
     },
   });
@@ -94,6 +94,7 @@ const {
             brands={allProductBrands?.nodes || []}
             origins={allProductOrigins?.nodes || []}
             products={products?.nodes || []}
+            language="vi"
           />
         </div>
       </div>

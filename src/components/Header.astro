@@ -2,10 +2,16 @@
 import { wpQuery } from "@apis/graphqlClient";
 import { GET_MENU_QUERY } from "@apis/queries";
 import { flatListToHierarchical } from "@utils/index";
-import { Debug } from "astro:components";
 
+const locale = Astro.currentLocale || "en";
 const { menuItems } = await wpQuery({
   query: GET_MENU_QUERY,
+  variables: {
+    where: {
+      language: locale.toUpperCase(),
+      location: "MAIN_MENU",
+    },
+  },
 });
 
 const hiderachicalMenu = flatListToHierarchical(menuItems?.nodes);
@@ -14,8 +20,11 @@ const hiderachicalMenu = flatListToHierarchical(menuItems?.nodes);
 <nav
   class="navbar navbar-expand-lg blur border-radius-sm top-0 z-index-3 shadow position-sticky py-3 start-0 end-0"
 >
-  <div class="container px-1">
-    <a class="navbar-brand font-weight-bolder ms-lg-0" href="/">Daiphattrade</a>
+  <div class="container">
+    <a
+      class="navbar-brand font-weight-bolder ms-lg-0"
+      href={locale !== "en" ? `/${locale}` : "/"}>Daiphattrade</a
+    >
     <button
       class="navbar-toggler shadow-none ms-2"
       type="button"
