@@ -9,7 +9,6 @@ import {
   GET_GENERAL_OPTIONS_QUERY,
   GET_HOME_OPTIONS_QUERY,
 } from "@apis/queries";
-import { Debug } from "astro:components";
 import { API_SECRET_TOKEN } from "astro:env/server";
 
 // Get locale
@@ -30,7 +29,6 @@ const { themeDptGeneralSettings } = await wpQuery({
 const generalSettings = themeDptGeneralSettings?.themeGeneralSettings || {};
 ---
 
-<!-- <Debug data={test} /> -->
 <Layout title="Home - Daiphattrade.com">
   <main>
     <PromoSectionLarge
@@ -41,21 +39,25 @@ const generalSettings = themeDptGeneralSettings?.themeGeneralSettings || {};
         : "../images/bg2.jpg"}
       pageHeaderMinVh="90vh"
       buttonUrl={homeSs1?.url || ""}
-      buttonText={"Explore Our Products"}
+      buttonText={locale === "en"
+        ? "Explore Our Products"
+        : "Khám Phá Sản Phẩm Của Chúng Tôi"}
     />
-    <div class="categories pt-8" id="categories">
+    <div class="categories pt-6 pt-lg-8" id="categories">
       <div class="container">
-        <div class="d-block text-center mb-5">
+        <div class="d-block text-center mb-4 mb-lg-5">
           <h3>{homeSs2?.title}</h3>
           <a class="text-dark font-weight-bold" href={homeSs2?.url || "#"}
-            >Browse all categories &#62;</a
+            >{
+              locale ? "Browse all categories &#62;" : "Tất cả danh mục &#62;"
+            }</a
           >
         </div>
         <div class="row mb-5">
           {
             homeSs2?.selectCategories?.nodes.map((category: any) => {
               return (
-                <div class="col-md-6 col-lg-3">
+                <div class="col-6 col-md-6 col-lg-3 mb-4">
                   <CardCategory
                     thumb_src={
                       category?.image?.filePath
@@ -65,23 +67,29 @@ const generalSettings = themeDptGeneralSettings?.themeGeneralSettings || {};
                     collection=""
                     title={category?.name}
                     url={category?.uri}
+                    classList="h-100"
                   />
                 </div>
               );
             })
           }
         </div>
-        <PromoSectionLarge
-          title={homeSs3?.title || ""}
-          full_description={homeSs3?.description || ""}
-          pageHeaderBgImg={homeSs3?.image?.node?.filePath
-            ? MEDIA_HOST + homeSs3?.image?.node?.filePath
-            : ""}
-          buttonUrl={homeSs3?.url || "#"}
-          pageHeaderMinVh="50vh"
-          pageHeaderRadius="1rem"
-        />
-        <div class="mt-8 mb-5">
+        <div class="product-suggestions">
+          <PromoSectionLarge
+            title={homeSs3?.title || ""}
+            full_description={homeSs3?.description || ""}
+            pageHeaderBgImg={homeSs3?.image?.node?.filePath
+              ? MEDIA_HOST + homeSs3?.image?.node?.filePath
+              : ""}
+            buttonUrl={homeSs3?.url || "#"}
+            buttonText={locale === "en"
+              ? "Explore Our Products"
+              : "Những sản phẩm khác"}
+            pageHeaderMinVh="50vh"
+            pageHeaderRadius="1rem"
+          />
+        </div>
+        <div class="mt-6 mt-md-8 mb-5">
           <ProductFeature
             title={homeSs4?.title || ""}
             images={homeSs4?.gallery?.nodes || []}
@@ -90,13 +98,13 @@ const generalSettings = themeDptGeneralSettings?.themeGeneralSettings || {};
           />
         </div>
         <div
-          class="page-header mt-5 mb-10 rounded-top"
+          class="page-header mt-5 mb-8 mb-lg-10 rounded-top"
           style={generalSettings?.formRegister?.background
             ? `background-image: url(${MEDIA_HOST + generalSettings.formRegister.background?.node.filePath}); min-height: 50vh;`
             : ""}
         >
           <div class="faded opacity-10"></div>
-          <div class="z-index-2">
+          <div class="z-index-2 p-4 p-md-0">
             <div class="row justify-content-center">
               <div class="col-sm-9 text-center mx-auto pt-6">
                 <h1 class="mb-4">

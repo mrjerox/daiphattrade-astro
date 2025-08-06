@@ -11,6 +11,8 @@ interface Props {
 }
 const { page, data }: Props = Astro.props;
 const { aboutSs1, aboutSs2f, aboutSs3, aboutSs4 } = data;
+
+const locale = Astro.currentLocale || "en";
 ---
 
 <main>
@@ -34,6 +36,9 @@ const { aboutSs1, aboutSs2f, aboutSs3, aboutSs4 } = data;
           pageHeaderBgImg={aboutSs4?.background?.node?.filePath
             ? MEDIA_HOST + aboutSs4?.background?.node?.filePath
             : ""}
+          buttonText={locale === "en"
+            ? "Explore Our Products"
+            : "Những sản phẩm khác"}
           pageHeaderMinVh="50vh"
           pageHeaderRadius="1rem"
         />

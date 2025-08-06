@@ -3,6 +3,10 @@ import { wpQuery } from "@apis/graphqlClient";
 import { GET_MENU_QUERY } from "@apis/queries";
 import { flatListToHierarchical } from "@utils/index";
 
+const languages = [
+  { code: "en", label: "EN" },
+  { code: "vi", label: "VI" },
+];
 const locale = Astro.currentLocale || "en";
 const { menuItems } = await wpQuery({
   query: GET_MENU_QUERY,
@@ -26,15 +30,16 @@ const hiderachicalMenu = flatListToHierarchical(menuItems?.nodes);
       href={locale !== "en" ? `/${locale}` : "/"}>Daiphattrade</a
     >
     <button
-      class="navbar-toggler shadow-none ms-2"
+      class="navbar-toggler shadow-none ms-2 collapsed"
       type="button"
       data-bs-toggle="collapse"
       data-bs-target="#navigation"
       aria-controls="navigation"
       aria-expanded="false"
       aria-label="Toggle navigation"
+      id="btn-menu"
     >
-      <span class="navbar-toggler-icon mt-2">
+      <span class="navbar-toggler-icon">
         <span class="navbar-toggler-bar bar1"></span>
         <span class="navbar-toggler-bar bar2"></span>
         <span class="navbar-toggler-bar bar3"></span>
@@ -82,6 +87,28 @@ const hiderachicalMenu = flatListToHierarchical(menuItems?.nodes);
           })
         }
       </ul>
+      <select
+        id="language"
+        class="nav-link text-dark font-weight-bold d-flex align-items-center me-2"
+      >
+        {
+          languages.map((lang) => (
+            <option value={`/${lang.code}`} selected={locale === lang.code}>
+              {lang.label}
+            </option>
+          ))
+        }
+      </select>
+    </div>
+  </div>
+  <div class="box-search">
+    <div class="container">
+      <form action="">
+        <input type="text" placeholder="Search..." />
+        <button type="button">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
     </div>
   </div>
 </nav>

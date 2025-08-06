@@ -49,7 +49,7 @@ export const getStaticPaths = async () => {
         category: category?.slug,
         field: ProductsOrderByEnum.Date,
         order: OrderEnum.Desc,
-        first: 9,
+        first: 999,
       },
     });
     return {
@@ -81,7 +81,6 @@ const {
 } = Astro.props;
 ---
 
-<!-- <Debug data={products} /> -->
 <Layout title={productCategory?.name || ""}>
   <main>
     <section class="section1">

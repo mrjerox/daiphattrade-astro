@@ -39,13 +39,11 @@ const styles = {
     <div class="page-header py-5 py-md-0" style={styles.pageHeader}>
       <span class="mask bg-black opacity-6"></span>
       <div class="container">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center px-4 px-md-0">
           <div class="col-lg-8 col-sm-9 text-center mx-auto">
             <h1 class="text-white mb-4">{title}</h1>
             <p class="lead text-white mb-sm-6 mb-4">{full_description}</p>
-            <a class="btn btn-white btn-lg" href={buttonUrl}
-              >{buttonText || "Explore Our Products"}</a
-            >
+            <a class="btn btn-white btn-lg" href={buttonUrl}>{buttonText}</a>
           </div>
         </div>
       </div>

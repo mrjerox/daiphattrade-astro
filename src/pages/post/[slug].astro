@@ -1,0 +1,142 @@
+---
+import { wpQuery } from "@apis/graphqlClient";
+import { GET_ALL_POSTS_QUERY, GET_RELATED_POSTS_QUERY } from "@apis/queries";
+import { MEDIA_HOST } from "@configs/constant.conf";
+import Layout from "@layouts/Layout.astro";
+import Image from "astro/components/Image.astro";
+import moment from "moment";
+import { API_SECRET_TOKEN } from "astro:env/server";
+import { Debug } from "astro:components";
+
+const currentLocale = Astro.currentLocale || "en";
+export const getStaticPaths = async () => {
+  const locale = Astro.currentLocale || "en";
+  // Fetch all post
+  const { posts } = await wpQuery({
+    query: GET_ALL_POSTS_QUERY,
+    token: API_SECRET_TOKEN,
+    variables: {
+      language: locale.toUpperCase(),
+    },
+  });
+  const promise = posts?.nodes?.map(async (post: any) => {
+    const { posts: relatedPosts } = await wpQuery({
+      query: GET_RELATED_POSTS_QUERY,
+      token: API_SECRET_TOKEN,
+      variables: {
+        where: {
+          notIn: post?.postId,
+          language: locale.toUpperCase(),
+        },
+      },
+    });
+    return {
+      params: { slug: post?.slug },
+      props: {
+        id: post?.id,
+        uri: post?.uri,
+        title: post?.title,
+        status: post?.status,
+        content: post?.content,
+        date: post?.date,
+        featuredImage: post?.featuredImage,
+        relatedPosts,
+      },
+    };
+  });
+
+  return Promise.all(promise);
+};
+
+const {
+  slug,
+  id,
+  uri,
+  title,
+  status,
+  content,
+  date,
+  featuredImage,
+  relatedPosts,
+} = Astro.props;
+---
+
+<!-- <Debug client:props={Astro.props} /> -->
+<Layout title="Posts">
+  <main>
+    <section class="breadcrumbs">
+      <Image
+        src={featuredImage?.node?.filePath
+          ? MEDIA_HOST + featuredImage?.node?.filePath
+          : "https://picsum.photos/1920/560"}
+        width="1920"
+        height="560"
+        alt=""
+      />
+    </section>
+    <section class="section1 py-6">
+      <div class="container" style="max-width: 1000px;">
+        <h1 class="h3">{title}</h1>
+        <div class="post-date mt-3 font-italic">
+          <i class="fa-solid fa-clock"></i>
+          {moment(date).format("D MMMM YYYY, h:mm:ss a")}
+        </div>
+        <div class="post-desc mt-5">
+          <Fragment set:html={content} />
+        </div>
+      </div>
+    </section>
+    <section class="section2 pt-4 pb-8">
+      <div class="container">
+        <h3>Related Posts</h3>
+        <p>Explore more of our posts</p>
+        <div class="row mt-5">
+          {
+            relatedPosts?.nodes?.map((post: any) => {
+              return (
+                <div class="col-12 col-md-4 col-lg-4 mb-4">
+                  <div class="card post-item">
+                    <a
+                      href={`/post/${post?.slug}`}
+                      class="d-block"
+                      style="line-height: 0;"
+                    >
+                      <Image
+                        src={
+                          post?.featuredImage
+                            ? MEDIA_HOST + post?.featuredImage?.node?.filePath
+                            : "https://placehold.co/600x400"
+                        }
+                        class="card-img-top w-100"
+                        alt="..."
+                        width={400}
+                        height={250}
+                      />
+                    </a>
+                    <div class="card-body">
+                      <a
+                        href={`/post/${post?.slug}`}
+                        class="card-title h5 mb-2 d-block"
+                      >
+                        {post?.title}
+                      </a>
+                      <div class="card-text">
+                        <Fragment set:html={post?.excerpt} />
+                      </div>
+                      <a
+                        href={`/post/${post?.slug}`}
+                        class="btn btn-dark mb-0 mt-3"
+                      >
+                        {currentLocale === "vi" ? "Xem chi tiết" : "Read more"}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              );
+            })
+          }
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

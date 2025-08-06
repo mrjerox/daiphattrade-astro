@@ -1,6 +1,6 @@
 export const GET_MENU_QUERY = `
-query GetMenuQuery($where: RootQueryToMenuItemConnectionWhereArgs = {}) {
-  menuItems(where: $where) {
+query GetMenuQuery($where: RootQueryToMenuItemConnectionWhereArgs = {}, $first: Int = 99) {
+  menuItems(where: $where, first: $first) {
     nodes {
       url
       title
@@ -18,7 +18,6 @@ query GetMenuQuery($where: RootQueryToMenuItemConnectionWhereArgs = {}) {
           parentId
         }
       }
-     
     }
   }
 }

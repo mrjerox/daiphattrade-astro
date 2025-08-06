@@ -1,10 +1,9 @@
 export const GET_PAGES_QUERY = `
-query NewQuery($where: RootQueryToPageConnectionWhereArgs = {}) {
+query GetPagesQuery($where: RootQueryToPageConnectionWhereArgs = {}) {
   pages(where: $where) {
     nodes {
       authorId
       content
-      featuredImageId
       pageId
       title
       uri
@@ -13,6 +12,15 @@ query NewQuery($where: RootQueryToPageConnectionWhereArgs = {}) {
       status
       template {
         templateName
+      }
+      featuredImage {
+        node {
+          altText
+          filePath
+          uri
+          title
+          slug
+        }
       }
     }
   }

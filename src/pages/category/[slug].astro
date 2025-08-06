@@ -1,0 +1,113 @@
+---
+import { GET_CATEGORIES_QUERY, GET_POSTS_QUERY } from "@apis/queries";
+import Layout from "@layouts/Layout.astro";
+import { API_SECRET_TOKEN } from "astro:env/server";
+import { wpQuery } from "@apis/graphqlClient";
+import { MEDIA_HOST } from "@configs/constant.conf";
+import { Debug } from "astro:components";
+import { Image } from "astro:assets";
+
+const currentLocale = Astro.currentLocale || "en";
+
+export const getStaticPaths = async () => {
+  const locale = Astro.currentLocale || "en";
+  // Fetch all categories
+  const { categories } = await wpQuery({
+    query: GET_CATEGORIES_QUERY,
+    token: API_SECRET_TOKEN,
+    variables: {
+      where: {
+        language: locale.toUpperCase(),
+      },
+    },
+  });
+
+  // Fetch posts by category
+  const promise = categories?.nodes?.map(async (category: any) => {
+    const { posts } = await wpQuery({
+      query: GET_POSTS_QUERY,
+      token: API_SECRET_TOKEN,
+      variables: {
+        categoryId: category?.categoryId,
+        language: locale.toUpperCase(),
+      },
+    });
+    return {
+      params: { slug: category?.slug },
+      props: {
+        id: category?.id,
+        categoryId: category?.categoryId,
+        name: category?.name,
+        description: category?.description,
+        slug: category?.slug,
+        uri: category?.uri,
+        image: category?.image?.node?.filePath
+          ? MEDIA_HOST + category?.image?.node?.filePath
+          : "",
+        posts,
+      },
+    };
+  });
+
+  return Promise.all(promise);
+};
+
+const { slug, id, name, description, image, posts } = Astro.props;
+---
+
+<Layout title="Category">
+  <main>
+    <section class="section1 py-5 pb-8 mt-5">
+      <div class="container">
+        <h2 class="mb-3 mt-5">{name}</h2>
+        <Fragment set:html={description} />
+        <div class="row mt-5">
+          {
+            posts?.nodes?.map((post: any) => {
+              return (
+                <div class="col-12 col-md-4 col-lg-4 mb-4">
+                  <div class="card post-item">
+                    <a
+                      href={`/post/${post?.slug}`}
+                      class="d-block"
+                      style="line-height: 0;"
+                    >
+                      <Image
+                        src={
+                          post?.featuredImage
+                            ? MEDIA_HOST + post?.featuredImage?.node?.filePath
+                            : "https://placehold.co/600x400"
+                        }
+                        class="card-img-top w-100"
+                        alt="..."
+                        width={400}
+                        height={250}
+                      />
+                    </a>
+                    <div class="card-body">
+                      <a
+                        href={`/post/${post?.slug}`}
+                        class="card-title h5 mb-2 d-block"
+                      >
+                        {post?.title}
+                      </a>
+                      <div class="card-text">
+                        <Fragment set:html={post?.excerpt} />
+                      </div>
+                      <a
+                        href={`/post/${post?.slug}`}
+                        class="btn btn-dark mb-0 mt-3"
+                      >
+                        {currentLocale === "vi" ? "Xem chi tiết" : "Read more"}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              );
+            })
+          }
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

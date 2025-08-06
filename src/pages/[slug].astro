@@ -14,6 +14,7 @@ import { API_SECRET_TOKEN } from "astro:env/server";
 import { PageIdType, MEDIA_HOST } from "@configs/constant.conf";
 import Categories from "@components/pages/Categories.astro";
 import About from "@components/pages/About.astro";
+import DefaultPage from "@components/pages/DefaultPage.astro";
 import { Debug } from "astro:components";
 import Cart from "@components/pages/Cart.astro";
 
@@ -46,9 +47,7 @@ export const getStaticPaths = async () => {
       props: {
         title: page?.title,
         content: page?.content,
-        featuredImage: page?.featuredImage?.node?.filePath
-          ? MEDIA_HOST + page?.featuredImage?.node?.filePath
-          : "",
+        featuredImage: page?.featuredImage,
         pageId: page?.id,
         uri: page?.uri,
         slug: page?.slug,
@@ -97,7 +96,7 @@ const {
           });
           return <About page={{ title, content }} data={page?.aboutUs} />;
         default:
-          return <h1>??</h1>;
+          return <DefaultPage page={{ title, content, date, featuredImage }} />;
       }
     }
   }

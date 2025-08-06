@@ -26,8 +26,10 @@ const classBody =
       }}
     >
     </div>
-    <div class={`card-body ${classBody}`}>
-      <div class="d-block mt-10">
+    <div
+      class={`card-body ${classBody} d-flex flex-column justify-content-end`}
+    >
+      <div class="d-block mt-4 mt-md-6 mt-lg-10">
         <p class="text-white font-weight-bold mb-1">{collection}</p>
         <h4 class="text-white font-weight-bolder">{title}</h4>
         {/* {(cta != null) &&  */}
