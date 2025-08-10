@@ -1,4 +1,5 @@
 [images]
-    external = [
-      "daiphattrade.tnhs.xyz"
+    remote_images = [
+      "daiphattrade.tnhs.xyz/.*"
     ]
+
