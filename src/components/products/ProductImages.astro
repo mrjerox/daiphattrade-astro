@@ -11,7 +11,7 @@ const { images, primaryImage }: Props = Astro.props;
 
 <div class="col-12 col-lg-6">
   <Image
-    class="w-90 rounded-2"
+    class="w-100 rounded-2"
     src={primaryImage?.filePath ? MEDIA_HOST + primaryImage.filePath : ""}
     alt={primaryImage?.alt ?? ""}
     id="primaryImage"

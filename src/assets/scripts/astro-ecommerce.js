@@ -18,32 +18,55 @@ import LazyLoad from "https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.0.3/+esm"
     // Your custom settings go here
   });
 
-  var isWindows = navigator.platform.indexOf("Win") > -1 ? true : false;
+  // Handle overlay
+  const overlays = document.querySelectorAll(".overlay");
+  overlays.forEach((overlay) => {
+    overlay.addEventListener("click", function (e) {
+      e.preventDefault();
+      const currentTarget = e.currentTarget;
+      const target = e.target.getAttribute("data-target");
+      const targetElement = document.querySelector(target);
+      targetElement.classList.toggle("active");
+      currentTarget.classList.toggle("active");
+    });
+  });
 
-  if (isWindows) {
-    // if we are on windows OS we activate the perfectScrollbar function
-    if (document.getElementsByClassName("main-content")[0]) {
-      var mainpanel = document.querySelector(".main-content");
-      var ps = new PerfectScrollbar(mainpanel);
-    }
+  // Handle filter
+  const filter = document.querySelector("#filter");
+  const btnFilter = document.querySelector("#btn-filter");
+  const overlayFilter = document.querySelector("#overlay-filter");
+  btnFilter.addEventListener("click", function (e) {
+    e.preventDefault();
+    filter.classList.toggle("active");
+    overlayFilter.classList.toggle("active");
+  });
 
-    if (document.getElementsByClassName("sidenav")[0]) {
-      var sidebar = document.querySelector(".sidenav");
-      var ps1 = new PerfectScrollbar(sidebar);
-    }
-
-    if (document.getElementsByClassName("navbar-collapse")[0]) {
-      var fixedplugin = document.querySelector(
-        ".navbar:not(.navbar-expand-lg) .navbar-collapse",
-      );
-      var ps2 = new PerfectScrollbar(fixedplugin);
-    }
-
-    if (document.getElementsByClassName("fixed-plugin")[0]) {
-      var fixedplugin = document.querySelector(".fixed-plugin");
-      var ps3 = new PerfectScrollbar(fixedplugin);
-    }
-  }
+  // var isWindows = navigator.platform.indexOf("Win") > -1 ? true : false;
+  //
+  // if (isWindows) {
+  //   // if we are on windows OS we activate the perfectScrollbar function
+  //   if (document.getElementsByClassName("main-content")[0]) {
+  //     var mainpanel = document.querySelector(".main-content");
+  //     var ps = new PerfectScrollbar(mainpanel);
+  //   }
+  //
+  //   if (document.getElementsByClassName("sidenav")[0]) {
+  //     var sidebar = document.querySelector(".sidenav");
+  //     var ps1 = new PerfectScrollbar(sidebar);
+  //   }
+  //
+  //   if (document.getElementsByClassName("navbar-collapse")[0]) {
+  //     var fixedplugin = document.querySelector(
+  //       ".navbar:not(.navbar-expand-lg) .navbar-collapse",
+  //     );
+  //     var ps2 = new PerfectScrollbar(fixedplugin);
+  //   }
+  //
+  //   if (document.getElementsByClassName("fixed-plugin")[0]) {
+  //     var fixedplugin = document.querySelector(".fixed-plugin");
+  //     var ps3 = new PerfectScrollbar(fixedplugin);
+  //   }
+  // }
 })();
 
 // Verify navbar blur on scroll

@@ -14,7 +14,10 @@ const classBody =
   cta != null ? "align-items-end d-flex" : "text-center w-100 pt-8";
 ---
 
-<a href={url}>
+<div class="cat-item position-relative h-100">
+  <a
+    href={url}
+    class="position-absolute top-0 start-0 w-100 h-100 b-block cat-href"></a>
   <div
     class={`card card-background align-items-start mb-4 mb-lg-0 ${classList}`}
   >
@@ -32,12 +35,10 @@ const classBody =
       <div class="d-block mt-4 mt-md-6 mt-lg-10">
         <p class="text-white font-weight-bold mb-1">{collection}</p>
         <h4 class="text-white font-weight-bolder">{title}</h4>
-        {/* {(cta != null) &&  */}
         <a href={url} class="text-white text-sm font-weight-semibold mb-0">
           See products &#62;
         </a>
-        {/* } */}
       </div>
     </div>
   </div>
-</a>
+</div>

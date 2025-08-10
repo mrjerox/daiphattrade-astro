@@ -22,7 +22,7 @@ const hiderachicalMenu = flatListToHierarchical(menuItems?.nodes);
 ---
 
 <nav
-  class="navbar navbar-expand-lg blur border-radius-sm top-0 z-index-3 shadow position-sticky py-3 start-0 end-0"
+  class="navbar navbar-expand-lg blur top-0 z-index-3 shadow position-sticky py-3 start-0 end-0"
 >
   <div class="container">
     <a
@@ -87,9 +87,17 @@ const hiderachicalMenu = flatListToHierarchical(menuItems?.nodes);
           })
         }
       </ul>
+      <a
+        href="/cart"
+        class="nav-link text-dark font-weight-bold d-flex align-items-center ps-lg-1 pe-0"
+        id="cart-link"
+      >
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span>1</span>
+      </a>
       <select
         id="language"
-        class="nav-link text-dark font-weight-bold d-flex align-items-center me-2"
+        class="nav-link text-dark font-weight-bold d-flex align-items-center"
       >
         {
           languages.map((lang) => (

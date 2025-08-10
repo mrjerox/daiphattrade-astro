@@ -1,0 +1,23 @@
+---
+import CheckoutOrderSummary from "@components/checkout/CheckoutOrderSummary.astro";
+import data from "@public/data.json";
+
+interface Props {
+  page: any;
+}
+const { page }: Props = Astro.props;
+let cartItems: any = [];
+data.shoppingCart.map((id) =>
+  data.products.filter((x) => x.id == id).map((x) => cartItems.push(x)),
+);
+---
+
+<main>
+  <section class="section1 py-5 mt-5">
+    <div class="container">
+      <h3>{page?.title}</h3>
+      <Fragment set:html={page?.content} />
+      <CheckoutOrderSummary products={cartItems} />
+    </div>
+  </section>
+</main>

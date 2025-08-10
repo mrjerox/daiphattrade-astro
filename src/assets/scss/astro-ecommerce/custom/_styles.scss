@@ -11,6 +11,22 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
   overflow: hidden;
+
+  p {
+    @media only screen and (max-width: 767px) {
+      font-size: 14px;
+    }
+  }
+
+
+}
+
+.card-product {
+  @media only screen and (max-width: 767px) {
+    h4 {
+      font-size: 18px;
+    }
+  }
 }
 
 .ft-nav {
@@ -210,6 +226,13 @@
   }
 }
 
+nav.navbar.navbar-expand-lg {
+  @media only screen and (max-width: 991px) {
+    background-color: #fff !important;
+    backdrop-filter: none !important
+  }
+}
+
 #navigation {
   @media only screen and (max-width: 991px) {
     // margin-left: -0.75rem;
@@ -220,6 +243,8 @@
     width: 100%;
     margin-left: 0px;
     background: rgb(255, 255, 255);
+    padding: 0px 1rem 2rem 1rem;
+    box-shadow: rgba(12, 26, 36, 0.09) 0px 0.75rem 1.0625rem -0.3125rem, rgba(12, 26, 36, 0.04) 0px 0.25rem 0.4375rem -0.1875px !important;
   }
 
   .nav-link {
@@ -304,6 +329,119 @@
       @media only screen and (max-width: 767px) {
         min-height: 70vh !important;
       }
+    }
+  }
+}
+
+.cat-item {
+  overflow: hidden;
+
+  &:hover {
+    .full-background {
+      transform: scale(1.15);
+    }
+  }
+
+  .full-background {
+    transition: all 0.4s ease-in-out;
+  }
+
+  .cat-href {
+    z-index: 9;
+  }
+}
+
+#filter {
+  @media only screen and (max-width: 767px) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 70vw;
+    height: 100vh;
+    background: #fff;
+    z-index: 9;
+    padding-top: 2rem;
+    transform: translateX(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+  }
+
+  &.active {
+    @media only screen and (max-width: 767px) {
+      transform: translateX(0);
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+.overlay {
+  position: fixed;
+  right: 0;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100%;
+  background-color: #3333336e;
+  z-index: 8;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s ease;
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+#cart-link {
+  position: relative;
+
+  span {
+    width: 16px;
+    height: 16px;
+    background-color: #1e293b;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: -5px;
+    right: -12px;
+    color: #fff;
+    font-size: 10px;
+  }
+}
+
+#product-list {
+  @media only screen and (max-width: 767px) {
+    .row {
+      margin-left: -6px;
+      margin-right: -6px;
+    }
+
+    .row>* {
+      padding-left: 6px;
+      padding-right: 6px;
+    }
+  }
+}
+
+.card-product {
+  &:hover {
+    >a {
+      img {
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  >a {
+    overflow: hidden;
+
+    img {
+      transition: all 0.4s ease;
     }
   }
 }

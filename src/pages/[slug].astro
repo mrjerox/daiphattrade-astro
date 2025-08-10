@@ -17,6 +17,7 @@ import About from "@components/pages/About.astro";
 import DefaultPage from "@components/pages/DefaultPage.astro";
 import { Debug } from "astro:components";
 import Cart from "@components/pages/Cart.astro";
+import Checkout from "@components/pages/Checkout.astro";
 
 export const getStaticPaths = async () => {
   // Fetch all pages
@@ -79,6 +80,8 @@ const {
     async () => {
       // Case page template
       switch (template) {
+        case "Checkout":
+          return <Checkout page={{ title, content }} />;
         case "Categories":
           return (
             <Categories

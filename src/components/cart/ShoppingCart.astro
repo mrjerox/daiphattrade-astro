@@ -3,18 +3,7 @@ import ProductCartItem from "./ProductCartItem.astro";
 import OrderSummary from "./OrderSummary.astro";
 
 interface Props {
-  products: {
-    thumb_src: string;
-    thumb_alt: string;
-    color: string;
-    title: string;
-    price: number;
-    size: string;
-    stock: boolean;
-    subtotal: number;
-    shipping: number;
-    tax: number;
-  }[];
+  products: any[];
 }
 const { products }: Props = Astro.props;
 let subtotal = 0;
@@ -22,14 +11,14 @@ products.map((product) => (subtotal += product.price));
 ---
 
 <>
-  <div class="container mt-5">
+  <div class="container my-5 py-5 pb-lg-10">
     <h2 class="mb-3 text-center">Shopping Cart</h2>
     <h5 class="text-center mb-5">You are eligible for Free Shipping.</h5>
     <div class="row">
       <div class="col-12 col-lg-7">
         {
           products.map((product, i) => (
-            <>
+            <div class="cart-item">
               {i != 0 && <hr class="horizontal dark my-4" />}
               <ProductCartItem
                 thumb_src={product.thumb_src}
@@ -40,7 +29,7 @@ products.map((product) => (subtotal += product.price));
                 price={product.price}
                 stock={product.stock}
               />
-            </>
+            </div>
           ))
         }
       </div>

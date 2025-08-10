@@ -46,9 +46,9 @@ const { title, full_description, data }: Props = Astro.props;
                 id={`tab-${index}`}
                 role="tabpanel"
               >
-                <div class="row mt-5">
+                <div class="row mt-md-5">
                   <div class="col-12 col-lg-6 mb-lg-0 mb-4 pe-lg-10">
-                    <h5 class="mt-5 mb-4">{item.titlle}</h5>
+                    <h5 class="mt-4 mb-3 mt-md-5 mb-md-4">{item.titlle}</h5>
                     <Fragment set:html={item.content} />
                   </div>
                   <div class="col-12 col-lg-6 mb-lg-0 mb-4">

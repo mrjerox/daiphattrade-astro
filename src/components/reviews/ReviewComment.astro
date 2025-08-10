@@ -10,9 +10,9 @@ const { review }: Props = Astro.props;
 ---
 
 <>
-  <div class="d-block my-5">
+  <div class="d-block my-4 my-md-5">
     <ReviewRating rating={review.star} />
-    <p class="text-sm mt-4">{review.content}</p>
+    <p class="text-sm mt-3 mt-md-4">{review.content}</p>
     <div class="d-flex align-items-center">
       <a
         href="#"

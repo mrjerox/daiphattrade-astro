@@ -14,13 +14,13 @@ const totalStar = data?.reviews.reduce((acc: number, review: any) => {
 ---
 
 <>
-  <div class="mx-auto text-center w-md-60 mb-5">
+  <div class="mx-auto text-center w-md-60 mb-4 mb-md-5">
     <h3>{data?.title || ""}</h3>
     <p>{data?.shortDescription}</p>
   </div>
   <div class="row">
     <div class="col-12 col-lg-5">
-      <div class="p-4 mb-4">
+      <div class="p-4 mb-md-4">
         <h4 class="mb-3">
           {locale === "en" ? "Client Reviews" : "Khách hàng nói về chúng tôi"}
         </h4>

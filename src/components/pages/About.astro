@@ -16,20 +16,20 @@ const locale = Astro.currentLocale || "en";
 ---
 
 <main>
-  <section class="section1 py-5 mt-5">
+  <section class="section1 py-md-5 mt-5">
     <div class="container">
       <ProductFeature2
         title={page?.title || "About Us"}
         full_description={page?.content || ""}
         data={aboutSs1?.infomation || []}
       />
-      <div class="my-10">
+      <div class="my-7 my-md-10">
         <IncentiveLarge data={aboutSs2f} />
       </div>
-      <div class="my-10">
+      <div class="my-7 my-md-10">
         <ReviewSummaryChart data={aboutSs3} />
       </div>
-      <div class="my-10">
+      <div class="my-7 my-md-10">
         <PromoSectionLarge
           title={aboutSs4?.title || ""}
           full_description={aboutSs4.description || ""}
