@@ -1,5 +1,5 @@
 [images]
     remote_images = [
-      "daiphattrade.tnhs.xyz/.*"
+      "https://daiphattrade.tnhs.xyz/.*"
     ]
 
